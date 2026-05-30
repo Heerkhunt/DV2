@@ -360,7 +360,7 @@
       "config": {"background": "transparent", "view": {"stroke": "#3d2b1a"}}
     }, {"actions": false});
 
-    // CHART 9 — Treemap (fixed labels)
+    // CHART 9 — Treemap
     vegaEmbed('#chart9', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 450, "background": "transparent",
@@ -368,7 +368,7 @@
       "transform": [
         {"calculate": "(datum.x + datum.x2) / 2", "as": "cx"},
         {"calculate": "(datum.y + datum.y2) / 2", "as": "cy"},
-        {"calculate": "datum.share + '%'", "as": "shareLabel"}
+        {"calculate": "datum.item + ' · ' + datum.share + '%'", "as": "label"}
       ],
       "layer": [
         {
@@ -393,20 +393,11 @@
           }
         },
         {
-          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 15},
+          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 14},
           "encoding": {
             "x": {"field": "cx", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
             "y": {"field": "cy", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
-            "text": {"field": "item", "type": "nominal"},
-            "color": {"value": "#1a0f00"}
-          }
-        },
-        {
-          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontSize": 13, "dy": 22},
-          "encoding": {
-            "x": {"field": "cx", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
-            "y": {"field": "cy", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
-            "text": {"field": "shareLabel", "type": "nominal"},
+            "text": {"field": "label", "type": "nominal"},
             "color": {"value": "#1a0f00"}
           }
         }

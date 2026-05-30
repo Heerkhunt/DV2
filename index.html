@@ -101,7 +101,7 @@
     <p>Younger Australians head out for their coffee fix, while older generations prefer the comfort of home. The crossover happens around 35–49 — a generation split between convenience and habit.</p>
     <div class="chart-card">
       <h3>Home-made vs takeaway coffee by age group</h3>
-      <p>Dumbbell chart — each line spans the gap between home-made (left) and takeaway (right) · Source: Roy Morgan Research</p>
+      <p>Dumbbell chart — each line spans the gap between home-made (left dot) and takeaway/café (right dot) · Source: Roy Morgan Research</p>
       <div id="chart6"></div>
     </div>
   </div>
@@ -164,7 +164,7 @@
         {
           "mark": {"type": "rule", "strokeWidth": 2, "color": "#6b4f35"},
           "encoding": {
-            "y": {"field": "state", "type": "nominal", "sort": "-x", "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "labelFontSize": 13}, "title": null},
+            "y": {"field": "state", "type": "nominal", "sort": "-x", "axis": {"labelColor": "#a08060", "labelFontSize": 13}, "title": null},
             "x": {"field": "cafes_per_100k", "type": "quantitative", "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "titleColor": "#a08060"}, "title": "Cafés per 100,000 people"},
             "x2": {"datum": 0}
           }
@@ -174,12 +174,7 @@
           "encoding": {
             "y": {"field": "state", "type": "nominal", "sort": "-x"},
             "x": {"field": "cafes_per_100k", "type": "quantitative"},
-            "tooltip": [
-              {"field": "state_full", "type": "nominal", "title": "State"},
-              {"field": "cafes_per_100k", "type": "quantitative", "title": "Cafés per 100k", "format": ".1f"},
-              {"field": "cafe_count", "type": "quantitative", "title": "Total cafés"},
-              {"field": "population", "type": "quantitative", "title": "Population", "format": ","}
-            ]
+            "tooltip": [{"field": "state_full", "type": "nominal", "title": "State"}, {"field": "cafes_per_100k", "type": "quantitative", "title": "Cafés per 100k", "format": ".1f"}, {"field": "cafe_count", "type": "quantitative", "title": "Total cafés"}, {"field": "population", "type": "quantitative", "title": "Population", "format": ","}]
           }
         },
         {
@@ -238,48 +233,32 @@
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 300, "background": "transparent",
       "data": {"url": homeUrl},
+      "transform": [
+        {"pivot": "mode", "value": "percentage", "groupby": ["age_group"]}
+      ],
       "layer": [
         {
-          "transform": [
-            {"filter": "datum.mode === 'Home-made'"},
-            {"lookup": "age_group",
-              "from": {
-                "data": {"url": homeUrl},
-                "key": "age_group",
-                "fields": ["percentage"],
-                "as": ["home_pct"]
-              }
-            }
-          ],
           "mark": {"type": "rule", "strokeWidth": 3, "color": "#6b4f35"},
           "encoding": {
-            "y": {
-              "field": "age_group", "type": "nominal",
-              "sort": ["14–24","25–34","35–49","50–64","65+"],
-              "axis": {"labelColor": "#a08060", "labelFontSize": 13}, "title": null
-            },
-            "x": {"field": "percentage", "type": "quantitative", "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "titleColor": "#a08060"}, "title": "Percentage (%)"},
-            "x2": {"datum": 100}
+            "y": {"field": "age_group", "type": "nominal", "sort": ["14–24","25–34","35–49","50–64","65+"], "axis": {"labelColor": "#a08060", "labelFontSize": 13}, "title": null},
+            "x": {"field": "Home-made", "type": "quantitative", "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "titleColor": "#a08060"}, "title": "Percentage (%)"},
+            "x2": {"field": "Takeaway/café"}
           }
         },
         {
-          "mark": {"type": "point", "filled": true, "size": 180},
+          "mark": {"type": "point", "filled": true, "size": 180, "color": "#e8b84b"},
           "encoding": {
-            "y": {
-              "field": "age_group", "type": "nominal",
-              "sort": ["14–24","25–34","35–49","50–64","65+"]
-            },
-            "x": {"field": "percentage", "type": "quantitative"},
-            "color": {
-              "field": "mode", "type": "nominal",
-              "scale": {"domain": ["Home-made","Takeaway/café"], "range": ["#e8b84b","#c8860a"]},
-              "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Mode"}
-            },
-            "tooltip": [
-              {"field": "age_group", "type": "nominal", "title": "Age group"},
-              {"field": "mode", "type": "nominal", "title": "Mode"},
-              {"field": "percentage", "type": "quantitative", "title": "%", "format": ".0f"}
-            ]
+            "y": {"field": "age_group", "type": "nominal", "sort": ["14–24","25–34","35–49","50–64","65+"]},
+            "x": {"field": "Home-made", "type": "quantitative"},
+            "tooltip": [{"field": "age_group", "type": "nominal", "title": "Age group"}, {"field": "Home-made", "type": "quantitative", "title": "Home-made %"}]
+          }
+        },
+        {
+          "mark": {"type": "point", "filled": true, "size": 180, "color": "#c8860a"},
+          "encoding": {
+            "y": {"field": "age_group", "type": "nominal", "sort": ["14–24","25–34","35–49","50–64","65+"]},
+            "x": {"field": "Takeaway/café", "type": "quantitative"},
+            "tooltip": [{"field": "age_group", "type": "nominal", "title": "Age group"}, {"field": "Takeaway/café", "type": "quantitative", "title": "Takeaway %"}]
           }
         }
       ]

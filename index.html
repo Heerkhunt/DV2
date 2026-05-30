@@ -34,6 +34,7 @@
     <p>From Melbourne's laneway espresso bars to Darwin's drive-through chains — exploring how café culture shapes Australian life.</p>
   </div>
 
+  <!-- SECTION 1 — Chart 1 -->
   <div class="section">
     <p class="section-label">Section 1 — Australia's Café Landscape</p>
     <h2>Where Does Coffee Culture Run Deepest?</h2>
@@ -45,6 +46,7 @@
     </div>
   </div>
 
+  <!-- SECTION 1 — Chart 2 -->
   <div class="section">
     <p class="section-label">Section 1 — Australia's Café Landscape</p>
     <h2>Where Are Australia's Cafés?</h2>
@@ -56,6 +58,7 @@
     </div>
   </div>
 
+  <!-- SECTION 1 — Chart 3 -->
   <div class="section">
     <p class="section-label">Section 1 — Australia's Café Landscape</p>
     <h2>Which States Have the Most Cafés Per Person?</h2>
@@ -67,6 +70,7 @@
     </div>
   </div>
 
+  <!-- SECTION 2 — Chart 4 -->
   <div class="section">
     <p class="section-label">Section 2 — Who Drinks Coffee?</p>
     <h2>How Often Does Each Generation Reach for a Cup?</h2>
@@ -78,6 +82,7 @@
     </div>
   </div>
 
+  <!-- SECTION 2 — Chart 5 -->
   <div class="section">
     <p class="section-label">Section 2 — Who Drinks Coffee?</p>
     <h2>What Does Each Generation Order?</h2>
@@ -89,6 +94,7 @@
     </div>
   </div>
 
+  <!-- SECTION 2 — Chart 6 -->
   <div class="section">
     <p class="section-label">Section 2 — Who Drinks Coffee?</p>
     <h2>Café or Kitchen — Where Do Australians Make Their Coffee?</h2>
@@ -100,8 +106,9 @@
     </div>
   </div>
 
+  <!-- SECTION 3 — Chart 7 -->
   <div class="section">
-    <p class="section-label">Section 3 — Spending & Trends</p>
+    <p class="section-label">Section 3 — Spending &amp; Trends</p>
     <h2>How Has Coffee Spending Evolved?</h2>
     <p>Total coffee spending has grown dramatically since 2015 — driven primarily by café and restaurant spending. But the rise of takeaway coffee, pods and beans shows Australians are diversifying how they get their fix.</p>
     <div class="chart-card">
@@ -111,8 +118,9 @@
     </div>
   </div>
 
+  <!-- SECTION 3 — Chart 8 -->
   <div class="section">
-    <p class="section-label">Section 3 — Spending & Trends</p>
+    <p class="section-label">Section 3 — Spending &amp; Trends</p>
     <h2>How Has Each State's Coffee Habit Grown?</h2>
     <p>A horizon graph compresses multiple time-series into a compact, scannable format. Each row is one state — the filled area and gold line both rise steadily, showing universal growth in coffee consumption across Australia since 2015.</p>
     <div class="chart-card">
@@ -122,8 +130,9 @@
     </div>
   </div>
 
+  <!-- SECTION 3 — Chart 9 -->
   <div class="section">
-    <p class="section-label">Section 3 — Spending & Trends</p>
+    <p class="section-label">Section 3 — Spending &amp; Trends</p>
     <h2>Where Do Australians Spend Their Coffee Money?</h2>
     <p>More than half of all coffee spending goes directly to cafés and restaurants — but pods, beans, and takeaway are growing fast. The treemap reveals the proportional dominance of the café economy over at-home alternatives.</p>
     <div class="chart-card">
@@ -133,6 +142,7 @@
     </div>
   </div>
 
+  <!-- SECTION 4 — Chart 10 -->
   <div class="section">
     <p class="section-label">Section 4 — Relationships</p>
     <h2>Does Income Drive Coffee Spending?</h2>
@@ -144,6 +154,7 @@
     </div>
   </div>
 
+  <!-- SECTION 4 — Chart 11 -->
   <div class="section">
     <p class="section-label">Section 4 — Relationships</p>
     <h2>Where Does the Morning Coffee Crowd Come From?</h2>
@@ -167,27 +178,39 @@
     </div>
   </div>
 
+  <!-- SECTION 5 — Chart 13 -->
+  <div class="section">
+    <p class="section-label">Section 5 — HD Custom Visual</p>
+    <h2>How Does Australia's Café Culture Differ Across States?</h2>
+    <p>Four metrics, eight states, one interactive dashboard. Each panel ranks all states by a different dimension of café culture — density, spending, brand presence, and overall score. Hover any bar to trace that state across all panels simultaneously. Use the dropdown to re-rank by the metric that matters most.</p>
+    <div class="chart-card">
+      <h3>State café culture — small multiples ranking dashboard</h3>
+      <p>Small multiples + ranking + hover interaction + annotation · Overview → filter → details on demand (Shneiderman's mantra) · Source: OpenStreetMap + ABS + Roy Morgan Research</p>
+      <div id="chart13"></div>
+    </div>
+  </div>
+
   <div class="footer">
     <p>Data sources: ABS Monthly Household Spending Indicator · Roy Morgan Research · OpenStreetMap · Canstar Blue</p>
     <p style="margin-top:8px">Created by Heer Khunt · FIT2179 Data Visualisation 2 · Monash University · 2026</p>
   </div>
 
   <script>
-    const geoUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/australia_states_simplified.geojson";
-    const cultureUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_culture_score.csv";
-    const cafeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/australian_cafe_locations.csv";
-    const densityUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_cafe_density.csv";
-    const freqUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_frequency_age.csv";
-    const typeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_type_age.csv";
-    const homeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/home_takeaway.csv";
+    const geoUrl      = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/australia_states_simplified.geojson";
+    const cultureUrl  = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_culture_score.csv";
+    const cafeUrl     = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/australian_cafe_locations.csv";
+    const densityUrl  = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_cafe_density.csv";
+    const freqUrl     = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_frequency_age.csv";
+    const typeUrl     = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_type_age.csv";
+    const homeUrl     = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/home_takeaway.csv";
     const spendingUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_spending_categories.csv";
-    const trendsUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_consumption_trends.csv";
-    const incomeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/income_spending.csv";
-    const flowUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/flow_map.csv";
-    const nodesUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/network_nodes.csv";
-    const linksUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/network_links.csv";
+    const trendsUrl   = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_consumption_trends.csv";
+    const incomeUrl   = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/income_spending.csv";
+    const flowUrl     = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/flow_map.csv";
+    const nodesUrl    = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/network_nodes.csv";
+    const linksUrl    = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/network_links.csv";
 
-    // CHART 1 — Choropleth map
+    // ── CHART 1 — Choropleth map ──────────────────────────────────────────
     vegaEmbed('#chart1', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 500, "background": "transparent",
@@ -203,7 +226,7 @@
       }]
     }, {"actions": false});
 
-    // CHART 2 — Dot density map
+    // ── CHART 2 — Dot density map ─────────────────────────────────────────
     vegaEmbed('#chart2', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 500, "background": "transparent",
@@ -215,14 +238,14 @@
           "mark": {"type": "circle", "size": 6, "opacity": 0.6, "color": "#c8860a"},
           "encoding": {
             "longitude": {"field": "lon", "type": "quantitative"},
-            "latitude": {"field": "lat", "type": "quantitative"},
+            "latitude":  {"field": "lat", "type": "quantitative"},
             "tooltip": [{"field": "name", "type": "nominal", "title": "Café"}, {"field": "state", "type": "nominal", "title": "State"}, {"field": "city", "type": "nominal", "title": "City"}]
           }
         }
       ]
     }, {"actions": false});
 
-    // CHART 3 — Lollipop chart
+    // ── CHART 3 — Lollipop chart ──────────────────────────────────────────
     vegaEmbed('#chart3', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 380, "background": "transparent",
@@ -231,8 +254,8 @@
         {
           "mark": {"type": "rule", "strokeWidth": 2, "color": "#6b4f35"},
           "encoding": {
-            "y": {"field": "state", "type": "nominal", "sort": "-x", "axis": {"labelColor": "#a08060", "labelFontSize": 13}, "title": null},
-            "x": {"field": "cafes_per_100k", "type": "quantitative", "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "titleColor": "#a08060"}, "title": "Cafés per 100,000 people"},
+            "y":  {"field": "state", "type": "nominal", "sort": "-x", "axis": {"labelColor": "#a08060", "labelFontSize": 13}, "title": null},
+            "x":  {"field": "cafes_per_100k", "type": "quantitative", "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "titleColor": "#a08060"}, "title": "Cafés per 100,000 people"},
             "x2": {"datum": 0}
           }
         },
@@ -247,15 +270,15 @@
         {
           "mark": {"type": "text", "align": "left", "dx": 8, "fontSize": 12, "color": "#c8860a"},
           "encoding": {
-            "y": {"field": "state", "type": "nominal", "sort": "-x"},
-            "x": {"field": "cafes_per_100k", "type": "quantitative"},
+            "y":    {"field": "state", "type": "nominal", "sort": "-x"},
+            "x":    {"field": "cafes_per_100k", "type": "quantitative"},
             "text": {"field": "cafes_per_100k", "type": "quantitative", "format": ".1f"}
           }
         }
       ]
     }, {"actions": false});
 
-    // CHART 4 — Heatmap
+    // ── CHART 4 — Heatmap ─────────────────────────────────────────────────
     vegaEmbed('#chart4', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 300, "background": "transparent",
@@ -263,13 +286,13 @@
       "mark": {"type": "rect", "cornerRadius": 3},
       "encoding": {
         "x": {"field": "age_group", "type": "nominal", "sort": ["14–24","25–34","35–49","50–64","65+"], "title": "Age group", "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "labelFontSize": 12}},
-        "y": {"field": "frequency", "type": "nominal", "sort": ["Rarely","1–2 cups/week","3–6 cups/week","Daily","2+ daily"], "title": null, "axis": {"labelColor": "#a08060", "labelFontSize": 12}},
+        "y": {"field": "frequency",  "type": "nominal", "sort": ["Rarely","1–2 cups/week","3–6 cups/week","Daily","2+ daily"], "title": null, "axis": {"labelColor": "#a08060", "labelFontSize": 12}},
         "color": {"field": "percentage", "type": "quantitative", "scale": {"scheme": "oranges", "domain": [0, 40]}, "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "% of age group"}},
         "tooltip": [{"field": "age_group", "type": "nominal", "title": "Age group"}, {"field": "frequency", "type": "nominal", "title": "Frequency"}, {"field": "percentage", "type": "quantitative", "title": "Percentage", "format": ".0f"}]
       }
     }, {"actions": false});
 
-    // CHART 5 — Small multiples
+    // ── CHART 5 — Small multiples ─────────────────────────────────────────
     vegaEmbed('#chart5', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": 160, "height": 160, "background": "transparent",
@@ -295,7 +318,7 @@
       "config": {"background": "transparent"}
     }, {"actions": false});
 
-    // CHART 6 — Dumbbell chart
+    // ── CHART 6 — Dumbbell chart ──────────────────────────────────────────
     vegaEmbed('#chart6', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 300, "background": "transparent",
@@ -305,8 +328,8 @@
         {
           "mark": {"type": "rule", "strokeWidth": 3, "color": "#6b4f35"},
           "encoding": {
-            "y": {"field": "age_group", "type": "nominal", "sort": ["14–24","25–34","35–49","50–64","65+"], "axis": {"labelColor": "#a08060", "labelFontSize": 13}, "title": null},
-            "x": {"field": "Home-made", "type": "quantitative", "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "titleColor": "#a08060"}, "title": "Percentage (%)"},
+            "y":  {"field": "age_group", "type": "nominal", "sort": ["14–24","25–34","35–49","50–64","65+"], "axis": {"labelColor": "#a08060", "labelFontSize": 13}, "title": null},
+            "x":  {"field": "Home-made", "type": "quantitative", "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "titleColor": "#a08060"}, "title": "Percentage (%)"},
             "x2": {"field": "Takeaway/café"}
           }
         },
@@ -329,7 +352,7 @@
       ]
     }, {"actions": false});
 
-    // CHART 7 — Streamgraph
+    // ── CHART 7 — Streamgraph ─────────────────────────────────────────────
     vegaEmbed('#chart7', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 400, "background": "transparent",
@@ -347,7 +370,7 @@
       }
     }, {"actions": false});
 
-    // CHART 8 — Horizon graph
+    // ── CHART 8 — Horizon graph ───────────────────────────────────────────
     vegaEmbed('#chart8', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "background": "transparent",
@@ -397,26 +420,26 @@
       "config": {"background": "transparent", "view": {"stroke": "#3d2b1a"}}
     }, {"actions": false});
 
-    // CHART 9 — Treemap
+    // ── CHART 9 — Treemap ─────────────────────────────────────────────────
     vegaEmbed('#chart9', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 450, "background": "transparent",
       "data": {
         "values": [
-          {"item": "Cafés", "x": 0, "y": 0, "x2": 58, "y2": 100, "share": 58, "cx": 29, "cy": 50},
-          {"item": "Takeaway", "x": 58, "y": 0, "x2": 78, "y2": 100, "share": 20, "cx": 68, "cy": 50},
-          {"item": "Pods", "x": 78, "y": 0, "x2": 91, "y2": 60, "share": 8, "cx": 84.5, "cy": 30},
-          {"item": "Beans", "x": 91, "y": 0, "x2": 100, "y2": 60, "share": 6, "cx": 95.5, "cy": 30},
-          {"item": "Instant", "x": 78, "y": 60, "x2": 100, "y2": 100, "share": 8, "cx": 89, "cy": 80}
+          {"item": "Cafés",    "x": 0,  "y": 0,  "x2": 58,  "y2": 100, "share": 58, "cx": 29,   "cy": 50},
+          {"item": "Takeaway", "x": 58, "y": 0,  "x2": 78,  "y2": 100, "share": 20, "cx": 68,   "cy": 50},
+          {"item": "Pods",     "x": 78, "y": 0,  "x2": 91,  "y2": 60,  "share": 8,  "cx": 84.5, "cy": 30},
+          {"item": "Beans",    "x": 91, "y": 0,  "x2": 100, "y2": 60,  "share": 6,  "cx": 95.5, "cy": 30},
+          {"item": "Instant",  "x": 78, "y": 60, "x2": 100, "y2": 100, "share": 8,  "cx": 89,   "cy": 80}
         ]
       },
       "layer": [
         {
           "mark": {"type": "rect", "stroke": "#1a0f00", "strokeWidth": 2},
           "encoding": {
-            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "x":  {"field": "x",  "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
             "x2": {"field": "x2"},
-            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "y":  {"field": "y",  "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
             "y2": {"field": "y2"},
             "color": {
               "field": "item", "type": "nominal",
@@ -429,8 +452,8 @@
         {
           "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 15},
           "encoding": {
-            "x": {"field": "cx", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
-            "y": {"field": "cy", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "x":    {"field": "cx", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "y":    {"field": "cy", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
             "text": {"field": "item", "type": "nominal"},
             "color": {"value": "#1a0f00"}
           }
@@ -438,8 +461,8 @@
         {
           "mark": {"type": "text", "align": "center", "baseline": "middle", "fontSize": 13, "dy": 22},
           "encoding": {
-            "x": {"field": "cx", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
-            "y": {"field": "cy", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "x":    {"field": "cx", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "y":    {"field": "cy", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
             "text": {"field": "share", "type": "quantitative", "format": ".0f"},
             "color": {"value": "#1a0f00"}
           }
@@ -447,7 +470,7 @@
       ]
     }, {"actions": false});
 
-    // CHART 10 — Connected scatter plot
+    // ── CHART 10 — Connected scatter plot ─────────────────────────────────
     vegaEmbed('#chart10', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 450, "background": "transparent",
@@ -456,7 +479,7 @@
         {
           "mark": {"type": "line", "color": "#6b4f35", "strokeWidth": 2, "opacity": 0.8},
           "encoding": {
-            "x": {"field": "income_index", "type": "quantitative", "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "gridColor": "#2d1f0f"}, "title": "Household income index"},
+            "x": {"field": "income_index",       "type": "quantitative", "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "gridColor": "#2d1f0f"}, "title": "Household income index"},
             "y": {"field": "cafe_spending_index", "type": "quantitative", "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "gridColor": "#2d1f0f"}, "title": "Café spending index ($M)"},
             "order": {"field": "year", "type": "quantitative"}
           }
@@ -464,7 +487,7 @@
         {
           "mark": {"type": "point", "filled": true, "size": 120},
           "encoding": {
-            "x": {"field": "income_index", "type": "quantitative"},
+            "x": {"field": "income_index",       "type": "quantitative"},
             "y": {"field": "cafe_spending_index", "type": "quantitative"},
             "color": {
               "field": "year", "type": "quantitative",
@@ -478,8 +501,8 @@
           "mark": {"type": "text", "align": "left", "dx": 8, "dy": -4, "fontSize": 11, "fontStyle": "italic"},
           "transform": [{"filter": "datum.year === 2015 || datum.year === 2020 || datum.year === 2025"}],
           "encoding": {
-            "x": {"field": "income_index", "type": "quantitative"},
-            "y": {"field": "cafe_spending_index", "type": "quantitative"},
+            "x":    {"field": "income_index",       "type": "quantitative"},
+            "y":    {"field": "cafe_spending_index", "type": "quantitative"},
             "text": {"field": "year", "type": "quantitative"},
             "color": {"value": "#f0e6d3"}
           }
@@ -487,7 +510,7 @@
       ]
     }, {"actions": false});
 
-    // CHART 11 — Flow map
+    // ── CHART 11 — Flow map ───────────────────────────────────────────────
     vegaEmbed('#chart11', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 550, "background": "transparent",
@@ -501,10 +524,10 @@
           "data": {"url": flowUrl},
           "mark": {"type": "rule", "opacity": 0.7},
           "encoding": {
-            "longitude": {"field": "from_lon", "type": "quantitative"},
-            "latitude": {"field": "from_lat", "type": "quantitative"},
+            "longitude":  {"field": "from_lon", "type": "quantitative"},
+            "latitude":   {"field": "from_lat", "type": "quantitative"},
             "longitude2": {"field": "to_lon"},
-            "latitude2": {"field": "to_lat"},
+            "latitude2":  {"field": "to_lat"},
             "strokeWidth": {"field": "flow", "type": "quantitative", "scale": {"range": [1, 8]}, "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Flow volume"}},
             "color": {"field": "flow", "type": "quantitative", "scale": {"scheme": "oranges", "domain": [1, 50]}, "legend": null},
             "tooltip": [{"field": "state", "type": "nominal", "title": "State"}, {"field": "hub", "type": "nominal", "title": "CBD hub"}, {"field": "flow", "type": "quantitative", "title": "Flow index", "format": ".1f"}]
@@ -515,7 +538,7 @@
           "mark": {"type": "circle", "opacity": 0.9, "color": "#c8860a"},
           "encoding": {
             "longitude": {"field": "to_lon", "type": "quantitative"},
-            "latitude": {"field": "to_lat", "type": "quantitative"},
+            "latitude":  {"field": "to_lat", "type": "quantitative"},
             "size": {"field": "flow", "type": "quantitative", "scale": {"range": [50, 400]}, "legend": null},
             "tooltip": [{"field": "hub", "type": "nominal", "title": "CBD hub"}, {"field": "flow", "type": "quantitative", "title": "Flow index", "format": ".1f"}]
           }
@@ -525,14 +548,14 @@
           "mark": {"type": "text", "dy": -12, "fontSize": 11, "fontWeight": "bold", "color": "#f0e6d3"},
           "encoding": {
             "longitude": {"field": "to_lon", "type": "quantitative"},
-            "latitude": {"field": "to_lat", "type": "quantitative"},
+            "latitude":  {"field": "to_lat", "type": "quantitative"},
             "text": {"field": "hub", "type": "nominal"}
           }
         }
       ]
     }, {"actions": false});
 
-    // CHART 12 — Network diagram (inline coords)
+    // ── CHART 12 — Network diagram ────────────────────────────────────────
     vegaEmbed('#chart12', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 450, "background": "transparent",
@@ -540,36 +563,24 @@
         {
           "data": {
             "values": [
-              {"x": 150, "y": 200, "x2": 300, "y2": 100, "source": "Age", "target": "Frequency", "weight": 3},
-              {"x": 150, "y": 200, "x2": 300, "y2": 320, "source": "Age", "target": "Type", "weight": 2},
-              {"x": 300, "y": 100, "x2": 550, "y2": 200, "source": "Frequency", "target": "Takeaway", "weight": 3},
-              {"x": 550, "y": 200, "x2": 750, "y2": 100, "source": "Takeaway", "target": "Spending", "weight": 4},
-              {"x": 300, "y": 320, "x2": 750, "y2": 100, "source": "Type", "target": "Spending", "weight": 2},
-              {"x": 150, "y": 320, "x2": 300, "y2": 100, "source": "Home", "target": "Frequency", "weight": 2},
-              {"x": 150, "y": 320, "x2": 750, "y2": 100, "source": "Home", "target": "Spending", "weight": 1}
+              {"x": 150, "y": 200, "x2": 300, "y2": 100, "source": "Age",       "target": "Frequency", "weight": 3},
+              {"x": 150, "y": 200, "x2": 300, "y2": 320, "source": "Age",       "target": "Type",      "weight": 2},
+              {"x": 300, "y": 100, "x2": 550, "y2": 200, "source": "Frequency", "target": "Takeaway",  "weight": 3},
+              {"x": 550, "y": 200, "x2": 750, "y2": 100, "source": "Takeaway",  "target": "Spending",  "weight": 4},
+              {"x": 300, "y": 320, "x2": 750, "y2": 100, "source": "Type",      "target": "Spending",  "weight": 2},
+              {"x": 150, "y": 320, "x2": 300, "y2": 100, "source": "Home",      "target": "Frequency", "weight": 2},
+              {"x": 150, "y": 320, "x2": 750, "y2": 100, "source": "Home",      "target": "Spending",  "weight": 1}
             ]
           },
           "mark": {"type": "rule", "opacity": 0.7},
           "encoding": {
-            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [50, 900]}},
-            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [50, 400]}},
+            "x":  {"field": "x",  "type": "quantitative", "axis": null, "scale": {"domain": [50, 900]}},
+            "y":  {"field": "y",  "type": "quantitative", "axis": null, "scale": {"domain": [50, 400]}},
             "x2": {"field": "x2"},
             "y2": {"field": "y2"},
-            "strokeWidth": {
-              "field": "weight", "type": "quantitative",
-              "scale": {"range": [1, 7]},
-              "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Relationship strength"}
-            },
-            "color": {
-              "field": "weight", "type": "quantitative",
-              "scale": {"domain": [1, 4], "range": ["#6b4f35","#c8860a","#e8b84b"]},
-              "legend": null
-            },
-            "tooltip": [
-              {"field": "source", "type": "nominal", "title": "From"},
-              {"field": "target", "type": "nominal", "title": "To"},
-              {"field": "weight", "type": "quantitative", "title": "Strength"}
-            ]
+            "strokeWidth": {"field": "weight", "type": "quantitative", "scale": {"range": [1, 7]}, "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Relationship strength"}},
+            "color": {"field": "weight", "type": "quantitative", "scale": {"domain": [1, 4], "range": ["#6b4f35","#c8860a","#e8b84b"]}, "legend": null},
+            "tooltip": [{"field": "source", "type": "nominal", "title": "From"}, {"field": "target", "type": "nominal", "title": "To"}, {"field": "weight", "type": "quantitative", "title": "Strength"}]
           }
         },
         {
@@ -590,10 +601,7 @@
             "size": {"value": 2500},
             "color": {
               "field": "node", "type": "nominal",
-              "scale": {
-                "domain": ["Age","Frequency","Takeaway","Type","Spending","Home"],
-                "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#a08060","#f0e6d3"]
-              },
+              "scale": {"domain": ["Age","Frequency","Takeaway","Type","Spending","Home"], "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#a08060","#f0e6d3"]},
               "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Node"}
             },
             "tooltip": [{"field": "node", "type": "nominal", "title": "Node"}]
@@ -612,13 +620,263 @@
           },
           "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 13},
           "encoding": {
-            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [50, 900]}},
-            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [50, 400]}},
+            "x":    {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [50, 900]}},
+            "y":    {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [50, 400]}},
             "text": {"field": "node", "type": "nominal"},
             "color": {"value": "#1a0f00"}
           }
         }
       ]
+    }, {"actions": false});
+
+    // ── CHART 13 — Custom Combined Idiom ──────────────────────────────────
+    // Small multiples + ranking + annotation + hover interaction
+    // Shneiderman's mantra: overview → filter → details on demand
+    vegaEmbed('#chart13', {
+      "$schema": "https://vega.github.io/schema/vega/v5.json",
+      "width": 900,
+      "height": 520,
+      "padding": {"top": 24, "left": 12, "right": 12, "bottom": 16},
+      "background": "transparent",
+
+      "signals": [
+        {
+          "name": "selectedMetric",
+          "value": "culture_score",
+          "bind": {
+            "input": "select",
+            "options": ["culture_score", "spending_score", "cafe_density", "brand_presence"],
+            "labels": ["Overall Culture Score", "Spending Score", "Café Density (per 100k)", "Brand Presence (%)"],
+            "name": "Rank states by:  "
+          }
+        },
+        {
+          "name": "hoveredState",
+          "value": null,
+          "on": [
+            {"events": "rect:mouseover", "update": "datum.state"},
+            {"events": "rect:mouseout",  "update": "null"}
+          ]
+        }
+      ],
+
+      "data": [
+        {
+          "name": "states",
+          "values": [
+            {"state": "ACT", "state_full": "Australian Capital Territory", "cafe_density": 44.01, "spending_score": 506.1, "brand_presence": 68.0,  "culture_score": 210.5},
+            {"state": "TAS", "state_full": "Tasmania",                      "cafe_density": 43.01, "spending_score": 494.6, "brand_presence": 62.5,  "culture_score": 205.0},
+            {"state": "SA",  "state_full": "South Australia",               "cafe_density": 34.17, "spending_score": 392.9, "brand_presence": 71.1,  "culture_score": 167.1},
+            {"state": "VIC", "state_full": "Victoria",                      "cafe_density": 34.04, "spending_score": 391.4, "brand_presence": 61.0,  "culture_score": 164.5},
+            {"state": "NT",  "state_full": "Northern Territory",            "cafe_density": 30.89, "spending_score": 355.2, "brand_presence": 64.4,  "culture_score": 151.1},
+            {"state": "WA",  "state_full": "Western Australia",             "cafe_density": 29.85, "spending_score": 343.3, "brand_presence": 55.9,  "culture_score": 144.8},
+            {"state": "QLD", "state_full": "Queensland",                    "cafe_density": 28.04, "spending_score": 322.4, "brand_presence": 69.0,  "culture_score": 139.3},
+            {"state": "NSW", "state_full": "New South Wales",               "cafe_density": 26.27, "spending_score": 302.0, "brand_presence": 59.1,  "culture_score": 129.3}
+          ]
+        },
+        {
+          "name": "metrics",
+          "values": [
+            {"metric": "culture_score",  "label": "Overall Culture Score", "domainMax": 250, "unit": ""},
+            {"metric": "spending_score", "label": "Spending Score",        "domainMax": 560, "unit": ""},
+            {"metric": "cafe_density",   "label": "Café Density / 100k",  "domainMax": 50,  "unit": "/100k"},
+            {"metric": "brand_presence", "label": "Brand Presence",       "domainMax": 80,  "unit": "%"}
+          ]
+        }
+      ],
+
+      "layout": {"columns": 4, "padding": {"row": 48, "column": 44}},
+
+      "marks": [
+        {
+          "type": "group",
+          "from": {"facet": {"name": "mf", "data": "metrics", "field": "metric"}},
+          "title": {
+            "text": {"signal": "parent.label"},
+            "color": "#c8860a",
+            "font": "Playfair Display",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "anchor": "start",
+            "frame": "group",
+            "offset": 8
+          },
+          "encode": {
+            "enter": {"width": {"value": 180}, "height": {"value": 240}}
+          },
+          "signals": [
+            {"name": "pm",  "update": "parent.metric"},
+            {"name": "pdm", "update": "parent.domainMax"},
+            {"name": "pu",  "update": "parent.unit"}
+          ],
+          "data": [
+            {
+              "name": "ps",
+              "source": "states",
+              "transform": [
+                {"type": "collect", "sort": {"field": {"signal": "pm"}, "order": "descending"}}
+              ]
+            }
+          ],
+          "scales": [
+            {
+              "name": "y",
+              "type": "band",
+              "domain": {"data": "ps", "field": "state"},
+              "range": [0, 240],
+              "padding": 0.2
+            },
+            {
+              "name": "x",
+              "type": "linear",
+              "domain": [0, {"signal": "pdm"}],
+              "range": [0, 180],
+              "zero": true,
+              "nice": false
+            }
+          ],
+          "marks": [
+            {
+              "type": "rect",
+              "from": {"data": "ps"},
+              "encode": {
+                "update": {
+                  "x": {"value": 0},
+                  "x2": {"scale": "x", "field": {"signal": "pm"}},
+                  "y": {"scale": "y", "field": "state"},
+                  "height": {"scale": "y", "band": 1},
+                  "cornerRadiusTopRight":    {"value": 3},
+                  "cornerRadiusBottomRight": {"value": 3},
+                  "fill": [
+                    {"test": "hoveredState === datum.state", "value": "#f0c060"},
+                    {"test": "selectedMetric === pm && (datum.state === 'ACT' || datum.state === 'TAS')", "value": "#c8860a"},
+                    {"test": "datum.state === 'ACT' || datum.state === 'TAS'", "value": "#e8b84b"},
+                    {"value": "#5c3317"}
+                  ],
+                  "fillOpacity": [
+                    {"test": "hoveredState === datum.state", "value": 1.0},
+                    {"value": 0.85}
+                  ]
+                }
+              }
+            },
+            {
+              "type": "text",
+              "from": {"data": "ps"},
+              "encode": {
+                "update": {
+                  "x": {"value": 4},
+                  "y": {"scale": "y", "field": "state", "band": 0.5},
+                  "baseline": {"value": "middle"},
+                  "text": {"field": "state"},
+                  "fontSize": {"value": 11},
+                  "font": {"value": "DM Sans"},
+                  "fontWeight": [
+                    {"test": "hoveredState === datum.state", "value": "bold"},
+                    {"test": "datum.state === 'ACT' || datum.state === 'TAS'", "value": "500"},
+                    {"value": "300"}
+                  ],
+                  "fill": [
+                    {"test": "hoveredState === datum.state", "value": "#1a0f00"},
+                    {"test": "datum.state === 'ACT' || datum.state === 'TAS'", "value": "#1a0f00"},
+                    {"value": "#f0e6d3"}
+                  ]
+                }
+              }
+            },
+            {
+              "type": "text",
+              "from": {"data": "ps"},
+              "encode": {
+                "update": {
+                  "x": {"scale": "x", "field": {"signal": "pm"}, "offset": 4},
+                  "y": {"scale": "y", "field": "state", "band": 0.5},
+                  "baseline": {"value": "middle"},
+                  "text": {"signal": "format(datum[pm], '.1f') + pu"},
+                  "fontSize": {"value": 9},
+                  "font": {"value": "DM Sans"},
+                  "fill": [
+                    {"test": "hoveredState === datum.state", "value": "#1a0f00"},
+                    {"test": "selectedMetric === pm && (datum.state === 'ACT' || datum.state === 'TAS')", "value": "#c8860a"},
+                    {"value": "#6b4f35"}
+                  ],
+                  "fontWeight": [
+                    {"test": "selectedMetric === pm && (datum.state === 'ACT' || datum.state === 'TAS')", "value": "bold"},
+                    {"value": "300"}
+                  ]
+                }
+              }
+            },
+            {
+              "type": "rule",
+              "encode": {
+                "enter": {
+                  "x": {"value": 0}, "x2": {"value": 180}, "y": {"value": 0},
+                  "stroke": {"value": "#3d2b1a"}, "strokeWidth": {"value": 1}
+                }
+              }
+            }
+          ]
+        },
+
+        {
+          "type": "group",
+          "encode": {
+            "enter": {
+              "x": {"value": 0}, "y": {"value": 440},
+              "width": {"value": 900}, "height": {"value": 60}
+            }
+          },
+          "marks": [
+            {
+              "type": "rule",
+              "encode": {
+                "enter": {
+                  "x": {"value": 0}, "x2": {"value": 900}, "y": {"value": 0},
+                  "stroke": {"value": "#3d2b1a"}, "strokeWidth": {"value": 1}
+                }
+              }
+            },
+            {
+              "type": "text",
+              "encode": {
+                "update": {
+                  "x": {"value": 16}, "y": {"value": 18},
+                  "text": {
+                    "signal": "hoveredState ? '▶  ' + hoveredState + ' — highlighted across all four metric panels' : 'Hover any bar to highlight that state across all panels  ·  Use the dropdown above to re-rank'"
+                  },
+                  "fill": {"signal": "hoveredState ? '#c8860a' : '#6b4f35'"},
+                  "fontSize": {"value": 12},
+                  "fontStyle": {"value": "italic"},
+                  "font": {"value": "DM Sans"}
+                }
+              }
+            },
+            {
+              "type": "text",
+              "encode": {
+                "enter": {
+                  "x": {"value": 16}, "y": {"value": 40},
+                  "text": {"value": "Key insight: ACT & TAS lead on density and spending per capita  ·  SA tops brand presence  ·  NSW leads volume but ranks last per capita"},
+                  "fill": {"value": "#5c3317"},
+                  "fontSize": {"value": 11},
+                  "font": {"value": "DM Sans"}
+                }
+              }
+            }
+          ]
+        }
+      ],
+
+      "config": {
+        "background": "transparent",
+        "group": {"fill": "transparent"},
+        "view":  {"stroke": "transparent"},
+        "axis":  {
+          "labelColor": "#a08060", "titleColor": "#a08060",
+          "gridColor": "#2d1f0f",  "domainColor": "#3d2b1a"
+        }
+      }
     }, {"actions": false});
 
   </script>

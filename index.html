@@ -122,6 +122,18 @@
     </div>
   </div>
 
+  <!-- SECTION 3 — Chart 9 -->
+  <div class="section">
+    <p class="section-label">Section 3 — Spending & Trends</p>
+    <h2>Where Do Australians Spend Their Coffee Money?</h2>
+    <p>More than half of all coffee spending goes directly to cafés and restaurants — but pods, beans, and takeaway are growing fast. The treemap reveals the proportional dominance of the café economy over at-home alternatives.</p>
+    <div class="chart-card">
+      <h3>Coffee spending breakdown by category</h3>
+      <p>Treemap — area = share of total spending · Source: ABS Household Spending Indicator + Canstar Blue</p>
+      <div id="chart9"></div>
+    </div>
+  </div>
+
   <div class="footer">
     <p>Data sources: ABS Monthly Household Spending Indicator · Roy Morgan Research · OpenStreetMap · Canstar Blue</p>
     <p style="margin-top:8px">Created by Heer Khunt · FIT2179 Data Visualisation 2 · Monash University · 2026</p>
@@ -137,6 +149,7 @@
     const homeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/home_takeaway.csv";
     const spendingUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_spending_categories.csv";
     const trendsUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_consumption_trends.csv";
+    const treemapUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/spending_treemap.csv";
 
     // CHART 1 — Choropleth map
     vegaEmbed('#chart1', {
@@ -298,41 +311,24 @@
       }
     }, {"actions": false});
 
-    // CHART 8 — Horizon graph fixed
+    // CHART 8 — Horizon graph
     vegaEmbed('#chart8', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": "container",
-      "background": "transparent",
+      "width": "container", "background": "transparent",
       "data": {"url": trendsUrl},
       "facet": {
         "field": "state", "type": "nominal",
         "sort": ["VIC","ACT","NSW","SA","WA","QLD","TAS","NT"],
-        "header": {
-          "title": null,
-          "labelColor": "#c8860a",
-          "labelFontSize": 12,
-          "labelFont": "DM Sans",
-          "labelAlign": "left",
-          "labelPadding": 4
-        }
+        "header": {"title": null, "labelColor": "#c8860a", "labelFontSize": 12, "labelFont": "DM Sans", "labelAlign": "left", "labelPadding": 4}
       },
       "spec": {
-        "width": "container",
-        "height": 50,
+        "width": "container", "height": 50,
         "layer": [
           {
             "mark": {"type": "area", "interpolate": "monotone", "opacity": 0.85, "color": "#8b5e3c"},
             "encoding": {
-              "x": {
-                "field": "year", "type": "quantitative",
-                "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "format": "d", "labelFontSize": 10},
-                "title": null
-              },
-              "y": {
-                "field": "consumption_index", "type": "quantitative",
-                "scale": {"domain": [45, 85]},
-                "axis": null
-              }
+              "x": {"field": "year", "type": "quantitative", "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "format": "d", "labelFontSize": 10}, "title": null},
+              "y": {"field": "consumption_index", "type": "quantitative", "scale": {"domain": [45, 85]}, "axis": null}
             }
           },
           {
@@ -340,11 +336,7 @@
             "transform": [{"filter": "datum.consumption_index > 62"}],
             "encoding": {
               "x": {"field": "year", "type": "quantitative"},
-              "y": {
-                "field": "consumption_index", "type": "quantitative",
-                "scale": {"domain": [45, 85]},
-                "axis": null
-              }
+              "y": {"field": "consumption_index", "type": "quantitative", "scale": {"domain": [45, 85]}, "axis": null}
             }
           },
           {
@@ -352,34 +344,77 @@
             "transform": [{"filter": "datum.consumption_index > 72"}],
             "encoding": {
               "x": {"field": "year", "type": "quantitative"},
-              "y": {
-                "field": "consumption_index", "type": "quantitative",
-                "scale": {"domain": [45, 85]},
-                "axis": null
-              }
+              "y": {"field": "consumption_index", "type": "quantitative", "scale": {"domain": [45, 85]}, "axis": null}
             }
           },
           {
             "mark": {"type": "line", "interpolate": "monotone", "strokeWidth": 2, "color": "#f0c060"},
             "encoding": {
               "x": {"field": "year", "type": "quantitative"},
-              "y": {
-                "field": "consumption_index", "type": "quantitative",
-                "scale": {"domain": [45, 85]},
-                "axis": null
-              },
-              "tooltip": [
-                {"field": "state", "type": "nominal", "title": "State"},
-                {"field": "year", "type": "quantitative", "title": "Year"},
-                {"field": "consumption_index", "type": "quantitative", "title": "Index", "format": ".1f"}
-              ]
+              "y": {"field": "consumption_index", "type": "quantitative", "scale": {"domain": [45, 85]}, "axis": null},
+              "tooltip": [{"field": "state", "type": "nominal", "title": "State"}, {"field": "year", "type": "quantitative", "title": "Year"}, {"field": "consumption_index", "type": "quantitative", "title": "Index", "format": ".1f"}]
             }
           }
         ]
       },
-      "columns": 1,
-      "spacing": 3,
+      "columns": 1, "spacing": 3,
       "config": {"background": "transparent", "view": {"stroke": "#3d2b1a"}}
+    }, {"actions": false});
+
+    // CHART 9 — Treemap
+    vegaEmbed('#chart9', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container", "height": 450, "background": "transparent",
+      "data": {"url": treemapUrl},
+      "layer": [
+        {
+          "mark": {"type": "rect", "stroke": "#1a0f00", "strokeWidth": 2},
+          "encoding": {
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "x2": {"field": "x2"},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "y2": {"field": "y2"},
+            "color": {
+              "field": "item", "type": "nominal",
+              "scale": {
+                "domain": ["Cafés","Takeaway","Pods","Beans","Instant"],
+                "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#a08060"]
+              },
+              "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Category"}
+            },
+            "tooltip": [
+              {"field": "item", "type": "nominal", "title": "Category"},
+              {"field": "share", "type": "quantitative", "title": "Share (%)", "format": ".0f"}
+            ]
+          }
+        },
+        {
+          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 16},
+          "encoding": {
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "x2": {"field": "x2"},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "y2": {"field": "y2"},
+            "text": {"field": "item", "type": "nominal"},
+            "color": {"value": "#1a0f00"}
+          },
+          "transform": [
+            {"calculate": "(datum.x + datum.x2) / 2", "as": "cx"},
+            {"calculate": "(datum.y + datum.y2) / 2", "as": "cy"}
+          ]
+        },
+        {
+          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontSize": 13, "dy": 20},
+          "encoding": {
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "x2": {"field": "x2"},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "y2": {"field": "y2"},
+            "text": {"field": "share", "type": "quantitative", "format": ".0f"},
+            "color": {"value": "#1a0f00"}
+          }
+        }
+      ]
     }, {"actions": false});
 
   </script>

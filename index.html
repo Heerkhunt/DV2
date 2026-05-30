@@ -82,6 +82,18 @@
     </div>
   </div>
 
+  <!-- SECTION 2 — Chart 5 -->
+  <div class="section">
+    <p class="section-label">Section 2 — Who Drinks Coffee?</p>
+    <h2>What Does Each Generation Order?</h2>
+    <p>Coffee type preferences shift dramatically with age. Younger Australians gravitate toward lattes, while older generations favour cappuccinos and long blacks. The flat white holds steady across all groups — a true Australian constant.</p>
+    <div class="chart-card">
+      <h3>Preferred coffee type by age group</h3>
+      <p>Small multiples — each panel shows the coffee type breakdown for one age group · Source: Roy Morgan Research</p>
+      <div id="chart5"></div>
+    </div>
+  </div>
+
   <div class="footer">
     <p>Data sources: ABS Monthly Household Spending Indicator · Roy Morgan Research · OpenStreetMap · Canstar Blue</p>
     <p style="margin-top:8px">Created by Heer Khunt · FIT2179 Data Visualisation 2 · Monash University · 2026</p>
@@ -93,6 +105,7 @@
     const cafeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/australian_cafe_locations.csv";
     const densityUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_cafe_density.csv";
     const freqUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_frequency_age.csv";
+    const typeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_type_age.csv";
 
     // CHART 1 — Choropleth map
     vegaEmbed('#chart1', {
@@ -174,29 +187,52 @@
       "data": {"url": freqUrl},
       "mark": {"type": "rect", "cornerRadius": 3},
       "encoding": {
-        "x": {
-          "field": "age_group", "type": "nominal",
-          "sort": ["14–24", "25–34", "35–49", "50–64", "65+"],
-          "title": "Age group",
-          "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "labelFontSize": 12}
-        },
-        "y": {
-          "field": "frequency", "type": "nominal",
-          "sort": ["Rarely", "1–2 cups/week", "3–6 cups/week", "Daily", "2+ daily"],
-          "title": null,
-          "axis": {"labelColor": "#a08060", "labelFontSize": 12}
-        },
-        "color": {
-          "field": "percentage", "type": "quantitative",
-          "scale": {"scheme": "oranges", "domain": [0, 40]},
-          "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "% of age group"}
-        },
-        "tooltip": [
-          {"field": "age_group", "type": "nominal", "title": "Age group"},
-          {"field": "frequency", "type": "nominal", "title": "Frequency"},
-          {"field": "percentage", "type": "quantitative", "title": "Percentage", "format": ".0f"}
-        ]
+        "x": {"field": "age_group", "type": "nominal", "sort": ["14–24","25–34","35–49","50–64","65+"], "title": "Age group", "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "labelFontSize": 12}},
+        "y": {"field": "frequency", "type": "nominal", "sort": ["Rarely","1–2 cups/week","3–6 cups/week","Daily","2+ daily"], "title": null, "axis": {"labelColor": "#a08060", "labelFontSize": 12}},
+        "color": {"field": "percentage", "type": "quantitative", "scale": {"scheme": "oranges", "domain": [0, 40]}, "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "% of age group"}},
+        "tooltip": [{"field": "age_group", "type": "nominal", "title": "Age group"}, {"field": "frequency", "type": "nominal", "title": "Frequency"}, {"field": "percentage", "type": "quantitative", "title": "Percentage", "format": ".0f"}]
       }
+    }, {"actions": false});
+
+    // CHART 5 — Small multiples
+    vegaEmbed('#chart5', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": 160, "height": 160,
+      "background": "transparent",
+      "data": {"url": typeUrl},
+      "facet": {
+        "field": "age_group",
+        "type": "nominal",
+        "sort": ["14–24","25–34","35–49","50–64","65+"],
+        "header": {
+          "title": null,
+          "labelColor": "#c8860a",
+          "labelFontSize": 13,
+          "labelFont": "Playfair Display"
+        }
+      },
+      "spec": {
+        "mark": {"type": "arc", "innerRadius": 40, "outerRadius": 75},
+        "encoding": {
+          "theta": {"field": "percentage", "type": "quantitative"},
+          "color": {
+            "field": "coffee_type",
+            "type": "nominal",
+            "scale": {
+              "domain": ["Latte","Flat white","Cappuccino","Espresso","Long black"],
+              "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#f0e6d3"]
+            },
+            "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Coffee type"}
+          },
+          "tooltip": [
+            {"field": "age_group", "type": "nominal", "title": "Age group"},
+            {"field": "coffee_type", "type": "nominal", "title": "Type"},
+            {"field": "percentage", "type": "quantitative", "title": "%", "format": ".0f"}
+          ]
+        }
+      },
+      "columns": 5,
+      "config": {"background": "transparent"}
     }, {"actions": false});
 
   </script>

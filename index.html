@@ -413,188 +413,97 @@ vegaEmbed('#chart5', {
 
     // ── CHART 8 — Horizon graph ───────────────────────────────────────────
 vegaEmbed('#chart8', {
-  "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "width": 900,
-  "height": 480,
-  "padding": {"left": 60, "right": 20, "top": 20, "bottom": 40},
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "background": "transparent",
-
-  "data": [
-    {"name": "raw", "url": trendsUrl},
-    {
-      "name": "states",
-      "source": "raw",
-      "transform": [
-        {"type": "aggregate", "groupby": ["state"],
-         "ops": ["min"], "fields": ["consumption_index"], "as": ["base"]}
-      ]
-    },
-    {
-      "name": "table",
-      "source": "raw",
-      "transform": [
-        {"type": "lookup", "from": "states", "key": "state",
-         "fields": ["state"], "values": ["base"], "as": ["base"]},
-        {"type": "formula", "as": "v", "expr": "datum.consumption_index - datum.base"},
-        {"type": "formula", "as": "band1", "expr": "min(datum.v, 10)"},
-        {"type": "formula", "as": "band2", "expr": "max(min(datum.v - 10, 10), 0)"},
-        {"type": "formula", "as": "band3", "expr": "max(min(datum.v - 20, 10), 0)"},
-        {"type": "formula", "as": "band4", "expr": "max(datum.v - 30, 0)"}
-      ]
+  "data": {
+    "values": [
+      {"state":"VIC","year":2015,"v":0},{"state":"VIC","year":2016,"v":2.1},{"state":"VIC","year":2017,"v":4.2},{"state":"VIC","year":2018,"v":6.3},{"state":"VIC","year":2019,"v":8.4},{"state":"VIC","year":2020,"v":10.5},{"state":"VIC","year":2021,"v":12.6},{"state":"VIC","year":2022,"v":14.7},{"state":"VIC","year":2023,"v":16.8},{"state":"VIC","year":2024,"v":18.9},{"state":"VIC","year":2025,"v":21.0},
+      {"state":"ACT","year":2015,"v":0},{"state":"ACT","year":2016,"v":2.4},{"state":"ACT","year":2017,"v":4.8},{"state":"ACT","year":2018,"v":7.2},{"state":"ACT","year":2019,"v":9.6},{"state":"ACT","year":2020,"v":12.0},{"state":"ACT","year":2021,"v":14.4},{"state":"ACT","year":2022,"v":16.8},{"state":"ACT","year":2023,"v":19.2},{"state":"ACT","year":2024,"v":21.6},{"state":"ACT","year":2025,"v":24.0},
+      {"state":"NSW","year":2015,"v":0},{"state":"NSW","year":2016,"v":2.1},{"state":"NSW","year":2017,"v":4.2},{"state":"NSW","year":2018,"v":6.3},{"state":"NSW","year":2019,"v":8.4},{"state":"NSW","year":2020,"v":10.5},{"state":"NSW","year":2021,"v":12.6},{"state":"NSW","year":2022,"v":14.7},{"state":"NSW","year":2023,"v":16.8},{"state":"NSW","year":2024,"v":18.9},{"state":"NSW","year":2025,"v":21.0},
+      {"state":"SA", "year":2015,"v":0},{"state":"SA", "year":2016,"v":2.2},{"state":"SA", "year":2017,"v":4.4},{"state":"SA", "year":2018,"v":6.6},{"state":"SA", "year":2019,"v":8.8},{"state":"SA", "year":2020,"v":11.0},{"state":"SA", "year":2021,"v":13.2},{"state":"SA", "year":2022,"v":15.4},{"state":"SA", "year":2023,"v":17.6},{"state":"SA", "year":2024,"v":19.8},{"state":"SA", "year":2025,"v":22.0},
+      {"state":"WA", "year":2015,"v":0},{"state":"WA", "year":2016,"v":1.8},{"state":"WA", "year":2017,"v":3.6},{"state":"WA", "year":2018,"v":5.4},{"state":"WA", "year":2019,"v":7.2},{"state":"WA", "year":2020,"v":9.0},{"state":"WA", "year":2021,"v":10.8},{"state":"WA", "year":2022,"v":12.6},{"state":"WA", "year":2023,"v":14.4},{"state":"WA", "year":2024,"v":16.2},{"state":"WA", "year":2025,"v":18.0},
+      {"state":"QLD","year":2015,"v":0},{"state":"QLD","year":2016,"v":2.0},{"state":"QLD","year":2017,"v":4.0},{"state":"QLD","year":2018,"v":6.1},{"state":"QLD","year":2019,"v":8.1},{"state":"QLD","year":2020,"v":10.5},{"state":"QLD","year":2021,"v":12.6},{"state":"QLD","year":2022,"v":14.1},{"state":"QLD","year":2023,"v":16.1},{"state":"QLD","year":2024,"v":18.1},{"state":"QLD","year":2025,"v":20.5},
+      {"state":"TAS","year":2015,"v":0},{"state":"TAS","year":2016,"v":2.5},{"state":"TAS","year":2017,"v":5.0},{"state":"TAS","year":2018,"v":7.5},{"state":"TAS","year":2019,"v":10.0},{"state":"TAS","year":2020,"v":12.5},{"state":"TAS","year":2021,"v":15.0},{"state":"TAS","year":2022,"v":17.5},{"state":"TAS","year":2023,"v":20.0},{"state":"TAS","year":2024,"v":22.5},{"state":"TAS","year":2025,"v":25.0},
+      {"state":"NT", "year":2015,"v":0},{"state":"NT", "year":2016,"v":1.5},{"state":"NT", "year":2017,"v":3.0},{"state":"NT", "year":2018,"v":4.5},{"state":"NT", "year":2019,"v":6.0},{"state":"NT", "year":2020,"v":7.5},{"state":"NT", "year":2021,"v":9.0},{"state":"NT", "year":2022,"v":10.5},{"state":"NT", "year":2023,"v":12.0},{"state":"NT", "year":2024,"v":13.5},{"state":"NT", "year":2025,"v":15.0}
+    ]
+  },
+  "facet": {
+    "field": "state",
+    "type": "nominal",
+    "sort": ["VIC","ACT","NSW","SA","WA","QLD","TAS","NT"],
+    "header": {
+      "title": null,
+      "labelColor": "#c8860a",
+      "labelFontSize": 11,
+      "labelFont": "DM Sans",
+      "labelAlign": "left",
+      "labelAnchor": "middle",
+      "labelPadding": 4
     }
-  ],
-
-  "scales": [
-    {
-      "name": "x",
-      "type": "linear",
-      "domain": {"data": "raw", "field": "year"},
-      "range": "width",
-      "zero": false
-    },
-    {
-      "name": "y",
-      "type": "linear",
-      "domain": [0, 10],
-      "range": [50, 0],
-      "zero": true
-    },
-    {
-      "name": "row",
-      "type": "ordinal",
-      "domain": ["VIC","ACT","NSW","SA","WA","QLD","TAS","NT"],
-      "range": [0, 60, 120, 180, 240, 300, 360, 420]
-    }
-  ],
-
-  "marks": [
-    {
-      "type": "group",
-      "from": {
-        "facet": {"name": "faceted", "data": "table", "groupby": "state"}
-      },
-      "encode": {
-        "enter": {
-          "y": {"scale": "row", "field": "state"},
-          "width": {"signal": "width"},
-          "height": {"value": 50},
-          "clip": {"value": true}
-        }
-      },
-      "marks": [
-        {
-          "type": "area",
-          "from": {"data": "faceted"},
-          "encode": {
-            "enter": {
-              "x": {"scale": "x", "field": "year"},
-              "y": {"scale": "y", "field": "band1"},
-              "y2": {"scale": "y", "value": 0},
-              "fill": {"value": "#8b5e3c"},
-              "fillOpacity": {"value": 0.6},
-              "interpolate": {"value": "monotone"}
-            }
-          }
-        },
-        {
-          "type": "area",
-          "from": {"data": "faceted"},
-          "encode": {
-            "enter": {
-              "x": {"scale": "x", "field": "year"},
-              "y": {"scale": "y", "field": "band2"},
-              "y2": {"scale": "y", "value": 0},
-              "fill": {"value": "#c8860a"},
-              "fillOpacity": {"value": 0.7},
-              "interpolate": {"value": "monotone"}
-            }
-          }
-        },
-        {
-          "type": "area",
-          "from": {"data": "faceted"},
-          "encode": {
-            "enter": {
-              "x": {"scale": "x", "field": "year"},
-              "y": {"scale": "y", "field": "band3"},
-              "y2": {"scale": "y", "value": 0},
-              "fill": {"value": "#e8b84b"},
-              "fillOpacity": {"value": 0.75},
-              "interpolate": {"value": "monotone"}
-            }
-          }
-        },
-        {
-          "type": "area",
-          "from": {"data": "faceted"},
-          "encode": {
-            "enter": {
-              "x": {"scale": "x", "field": "year"},
-              "y": {"scale": "y", "field": "band4"},
-              "y2": {"scale": "y", "value": 0},
-              "fill": {"value": "#f0e6d3"},
-              "fillOpacity": {"value": 0.8},
-              "interpolate": {"value": "monotone"}
-            }
-          }
-        },
-        {
-          "type": "rule",
-          "encode": {
-            "enter": {
-              "x": {"value": 0}, "x2": {"signal": "width"},
-              "y": {"value": 50},
-              "stroke": {"value": "#3d2b1a"},
-              "strokeWidth": {"value": 1}
-            }
-          }
-        },
-        {
-          "type": "text",
-          "encode": {
-            "enter": {
-              "x": {"value": -4},
-              "y": {"value": 25},
-              "align": {"value": "right"},
-              "baseline": {"value": "middle"},
-              "fill": {"value": "#c8860a"},
-              "fontSize": {"value": 11},
-              "font": {"value": "DM Sans"},
-              "fontWeight": {"value": "500"},
-              "text": {"field": "state", "from": "faceted"}
-            }
+  },
+  "columns": 1,
+  "spacing": 2,
+  "spec": {
+    "width": "container",
+    "height": 50,
+    "layer": [
+      {
+        "mark": {"type": "area", "interpolate": "monotone", "clip": true},
+        "transform": [{"calculate": "min(datum.v, 8)", "as": "b1"}],
+        "encoding": {
+          "x": {
+            "field": "year", "type": "quantitative",
+            "scale": {"domain": [2015, 2025]},
+            "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "format": "d", "labelFontSize": 10, "title": null}
           },
-          "from": {
-            "data": "faceted",
-            "transform": [{"type": "aggregate", "groupby": ["state"]}]
-          }
+          "y": {
+            "field": "b1", "type": "quantitative",
+            "scale": {"domain": [0, 8]},
+            "axis": null
+          },
+          "y2": {"datum": 0},
+          "fill": {"value": "#8b5e3c"},
+          "fillOpacity": {"value": 0.9}
         }
-      ]
-    },
-    {
-      "type": "axis",
-      "scale": "x",
-      "orient": "bottom",
-      "offset": 430,
-      "encode": {
-        "labels": {
-          "update": {
-            "fill": {"value": "#a08060"},
-            "fontSize": {"value": 11},
-            "font": {"value": "DM Sans"},
-            "text": {"signal": "format(datum.value, 'd')"}
-          }
-        },
-        "ticks": {"update": {"stroke": {"value": "#3d2b1a"}}},
-        "domain": {"update": {"stroke": {"value": "#3d2b1a"}}}
+      },
+      {
+        "mark": {"type": "area", "interpolate": "monotone", "clip": true},
+        "transform": [{"calculate": "max(min(datum.v - 8, 8), 0)", "as": "b2"}],
+        "encoding": {
+          "x": {"field": "year", "type": "quantitative", "scale": {"domain": [2015, 2025]}},
+          "y": {"field": "b2", "type": "quantitative", "scale": {"domain": [0, 8]}, "axis": null},
+          "y2": {"datum": 0},
+          "fill": {"value": "#c8860a"},
+          "fillOpacity": {"value": 0.85}
+        }
+      },
+      {
+        "mark": {"type": "area", "interpolate": "monotone", "clip": true},
+        "transform": [{"calculate": "max(min(datum.v - 16, 8), 0)", "as": "b3"}],
+        "encoding": {
+          "x": {"field": "year", "type": "quantitative", "scale": {"domain": [2015, 2025]}},
+          "y": {"field": "b3", "type": "quantitative", "scale": {"domain": [0, 8]}, "axis": null},
+          "y2": {"datum": 0},
+          "fill": {"value": "#e8b84b"},
+          "fillOpacity": {"value": 0.8}
+        }
+      },
+      {
+        "mark": {"type": "area", "interpolate": "monotone", "clip": true},
+        "transform": [{"calculate": "max(datum.v - 24, 0)", "as": "b4"}],
+        "encoding": {
+          "x": {"field": "year", "type": "quantitative", "scale": {"domain": [2015, 2025]}},
+          "y": {"field": "b4", "type": "quantitative", "scale": {"domain": [0, 8]}, "axis": null},
+          "y2": {"datum": 0},
+          "fill": {"value": "#f0c060"},
+          "fillOpacity": {"value": 0.75}
+        }
       }
-    }
-  ],
-
+    ]
+  },
   "config": {
     "background": "transparent",
-    "group": {"fill": "transparent"},
-    "view": {"stroke": "transparent"}
+    "view": {"stroke": "#3d2b1a"}
   }
 }, {"actions": false});
     

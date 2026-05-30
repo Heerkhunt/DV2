@@ -70,6 +70,18 @@
     </div>
   </div>
 
+  <!-- SECTION 2 — Chart 4 -->
+  <div class="section">
+    <p class="section-label">Section 2 — Who Drinks Coffee?</p>
+    <h2>How Often Does Each Generation Reach for a Cup?</h2>
+    <p>Coffee frequency increases with age — older Australians are the most habitual drinkers. But younger Australians are catching up fast, with daily consumption rising sharply among 25–34 year olds. Source: Roy Morgan Research.</p>
+    <div class="chart-card">
+      <h3>Coffee consumption frequency by age group</h3>
+      <p>Darker cells = higher percentage of that age group drinking at that frequency · Source: Roy Morgan Research</p>
+      <div id="chart4"></div>
+    </div>
+  </div>
+
   <div class="footer">
     <p>Data sources: ABS Monthly Household Spending Indicator · Roy Morgan Research · OpenStreetMap · Canstar Blue</p>
     <p style="margin-top:8px">Created by Heer Khunt · FIT2179 Data Visualisation 2 · Monash University · 2026</p>
@@ -80,6 +92,7 @@
     const cultureUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_culture_score.csv";
     const cafeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/australian_cafe_locations.csv";
     const densityUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_cafe_density.csv";
+    const freqUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_frequency_age.csv";
 
     // CHART 1 — Choropleth map
     vegaEmbed('#chart1', {
@@ -152,6 +165,38 @@
           }
         }
       ]
+    }, {"actions": false});
+
+    // CHART 4 — Heatmap age × frequency
+    vegaEmbed('#chart4', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container", "height": 300, "background": "transparent",
+      "data": {"url": freqUrl},
+      "mark": {"type": "rect", "cornerRadius": 3},
+      "encoding": {
+        "x": {
+          "field": "age_group", "type": "nominal",
+          "sort": ["14–24", "25–34", "35–49", "50–64", "65+"],
+          "title": "Age group",
+          "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "labelFontSize": 12}
+        },
+        "y": {
+          "field": "frequency", "type": "nominal",
+          "sort": ["Rarely", "1–2 cups/week", "3–6 cups/week", "Daily", "2+ daily"],
+          "title": null,
+          "axis": {"labelColor": "#a08060", "labelFontSize": 12}
+        },
+        "color": {
+          "field": "percentage", "type": "quantitative",
+          "scale": {"scheme": "oranges", "domain": [0, 40]},
+          "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "% of age group"}
+        },
+        "tooltip": [
+          {"field": "age_group", "type": "nominal", "title": "Age group"},
+          {"field": "frequency", "type": "nominal", "title": "Frequency"},
+          {"field": "percentage", "type": "quantitative", "title": "Percentage", "format": ".0f"}
+        ]
+      }
     }, {"actions": false});
 
   </script>

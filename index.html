@@ -122,7 +122,6 @@
     </div>
   </div>
 
-  <!-- SECTION 3 — Chart 9 -->
   <div class="section">
     <p class="section-label">Section 3 — Spending & Trends</p>
     <h2>Where Do Australians Spend Their Coffee Money?</h2>
@@ -361,11 +360,16 @@
       "config": {"background": "transparent", "view": {"stroke": "#3d2b1a"}}
     }, {"actions": false});
 
-    // CHART 9 — Treemap
+    // CHART 9 — Treemap (fixed labels)
     vegaEmbed('#chart9', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 450, "background": "transparent",
       "data": {"url": treemapUrl},
+      "transform": [
+        {"calculate": "(datum.x + datum.x2) / 2", "as": "cx"},
+        {"calculate": "(datum.y + datum.y2) / 2", "as": "cy"},
+        {"calculate": "datum.share + '%'", "as": "shareLabel"}
+      ],
       "layer": [
         {
           "mark": {"type": "rect", "stroke": "#1a0f00", "strokeWidth": 2},
@@ -389,28 +393,20 @@
           }
         },
         {
-          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 16},
+          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 15},
           "encoding": {
-            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
-            "x2": {"field": "x2"},
-            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
-            "y2": {"field": "y2"},
+            "x": {"field": "cx", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "y": {"field": "cy", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
             "text": {"field": "item", "type": "nominal"},
             "color": {"value": "#1a0f00"}
-          },
-          "transform": [
-            {"calculate": "(datum.x + datum.x2) / 2", "as": "cx"},
-            {"calculate": "(datum.y + datum.y2) / 2", "as": "cy"}
-          ]
+          }
         },
         {
-          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontSize": 13, "dy": 20},
+          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontSize": 13, "dy": 22},
           "encoding": {
-            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
-            "x2": {"field": "x2"},
-            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
-            "y2": {"field": "y2"},
-            "text": {"field": "share", "type": "quantitative", "format": ".0f"},
+            "x": {"field": "cx", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "y": {"field": "cy", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "text": {"field": "shareLabel", "type": "nominal"},
             "color": {"value": "#1a0f00"}
           }
         }

@@ -58,6 +58,18 @@
     </div>
   </div>
 
+  <!-- SECTION 1 — Chart 3 -->
+  <div class="section">
+    <p class="section-label">Section 1 — Australia's Café Landscape</p>
+    <h2>Which States Have the Most Cafés Per Person?</h2>
+    <p>Raw café counts favour populous states — but normalising by population tells a different story. Tasmania and the ACT punch well above their weight, with significantly more cafés per 100,000 people than NSW or Queensland.</p>
+    <div class="chart-card">
+      <h3>Cafés per 100,000 people by state</h3>
+      <p>Derived: café count ÷ population × 100,000 · Source: OpenStreetMap + ABS population data</p>
+      <div id="chart3"></div>
+    </div>
+  </div>
+
   <div class="footer">
     <p>Data sources: ABS Monthly Household Spending Indicator · Roy Morgan Research · OpenStreetMap · Canstar Blue</p>
     <p style="margin-top:8px">Created by Heer Khunt · FIT2179 Data Visualisation 2 · Monash University · 2026</p>
@@ -67,88 +79,76 @@
     const geoUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/australia_states_simplified.geojson";
     const cultureUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_culture_score.csv";
     const cafeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/australian_cafe_locations.csv";
+    const densityUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_cafe_density.csv";
 
     // CHART 1 — Choropleth map
     vegaEmbed('#chart1', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": "container",
-      "height": 500,
-      "background": "transparent",
-      "projection": {
-        "type": "conicEqualArea",
-        "parallels": [-18, -36],
-        "rotate": [-132, 0]
-      },
-      "layer": [
-        {
-          "data": {
-            "url": geoUrl,
-            "format": {"type": "json", "property": "features"}
-          },
-          "transform": [
-            {
-              "lookup": "properties.STATE_NAME",
-              "from": {
-                "data": {"url": cultureUrl},
-                "key": "state_full",
-                "fields": ["spending_score", "state"]
-              }
-            }
-          ],
-          "mark": {"type": "geoshape", "stroke": "#3d2b1a", "strokeWidth": 1},
-          "encoding": {
-            "color": {
-              "field": "spending_score",
-              "type": "quantitative",
-              "title": "Spending score",
-              "scale": {"scheme": "oranges", "domain": [250, 550]},
-              "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Spending score"}
-            },
-            "tooltip": [
-              {"field": "properties.STATE_NAME", "type": "nominal", "title": "State"},
-              {"field": "spending_score", "type": "quantitative", "title": "Spending score", "format": ".1f"}
-            ]
-          }
+      "width": "container", "height": 500, "background": "transparent",
+      "projection": {"type": "conicEqualArea", "parallels": [-18, -36], "rotate": [-132, 0]},
+      "layer": [{
+        "data": {"url": geoUrl, "format": {"type": "json", "property": "features"}},
+        "transform": [{"lookup": "properties.STATE_NAME", "from": {"data": {"url": cultureUrl}, "key": "state_full", "fields": ["spending_score", "state"]}}],
+        "mark": {"type": "geoshape", "stroke": "#3d2b1a", "strokeWidth": 1},
+        "encoding": {
+          "color": {"field": "spending_score", "type": "quantitative", "scale": {"scheme": "oranges", "domain": [250, 550]}, "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Spending score"}},
+          "tooltip": [{"field": "properties.STATE_NAME", "type": "nominal", "title": "State"}, {"field": "spending_score", "type": "quantitative", "title": "Spending score", "format": ".1f"}]
         }
-      ]
+      }]
     }, {"actions": false});
 
     // CHART 2 — Dot density map
     vegaEmbed('#chart2', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": "container",
-      "height": 500,
-      "background": "transparent",
+      "width": "container", "height": 500, "background": "transparent",
       "projection": {"type": "mercator"},
       "layer": [
-        {
-          "data": {
-            "url": geoUrl,
-            "format": {"type": "json", "property": "features"}
-          },
-          "mark": {
-            "type": "geoshape",
-            "fill": "#2a1a08",
-            "stroke": "#3d2b1a",
-            "strokeWidth": 0.8
-          }
-        },
+        {"data": {"url": geoUrl, "format": {"type": "json", "property": "features"}}, "mark": {"type": "geoshape", "fill": "#2a1a08", "stroke": "#3d2b1a", "strokeWidth": 0.8}},
         {
           "data": {"url": cafeUrl},
-          "mark": {
-            "type": "circle",
-            "size": 6,
-            "opacity": 0.6,
-            "color": "#c8860a"
-          },
+          "mark": {"type": "circle", "size": 6, "opacity": 0.6, "color": "#c8860a"},
           "encoding": {
             "longitude": {"field": "lon", "type": "quantitative"},
             "latitude": {"field": "lat", "type": "quantitative"},
+            "tooltip": [{"field": "name", "type": "nominal", "title": "Café"}, {"field": "state", "type": "nominal", "title": "State"}, {"field": "city", "type": "nominal", "title": "City"}]
+          }
+        }
+      ]
+    }, {"actions": false});
+
+    // CHART 3 — Lollipop chart
+    vegaEmbed('#chart3', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container", "height": 380, "background": "transparent",
+      "data": {"url": densityUrl},
+      "layer": [
+        {
+          "mark": {"type": "rule", "strokeWidth": 2, "color": "#6b4f35"},
+          "encoding": {
+            "y": {"field": "state", "type": "nominal", "sort": "-x", "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "labelFontSize": 13}, "title": null},
+            "x": {"field": "cafes_per_100k", "type": "quantitative", "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "titleColor": "#a08060"}, "title": "Cafés per 100,000 people"},
+            "x2": {"datum": 0}
+          }
+        },
+        {
+          "mark": {"type": "point", "filled": true, "size": 150, "color": "#c8860a"},
+          "encoding": {
+            "y": {"field": "state", "type": "nominal", "sort": "-x"},
+            "x": {"field": "cafes_per_100k", "type": "quantitative"},
             "tooltip": [
-              {"field": "name", "type": "nominal", "title": "Café"},
-              {"field": "state", "type": "nominal", "title": "State"},
-              {"field": "city", "type": "nominal", "title": "City"}
+              {"field": "state_full", "type": "nominal", "title": "State"},
+              {"field": "cafes_per_100k", "type": "quantitative", "title": "Cafés per 100k", "format": ".1f"},
+              {"field": "cafe_count", "type": "quantitative", "title": "Total cafés"},
+              {"field": "population", "type": "quantitative", "title": "Population", "format": ","}
             ]
+          }
+        },
+        {
+          "mark": {"type": "text", "align": "left", "dx": 8, "fontSize": 12, "color": "#c8860a"},
+          "encoding": {
+            "y": {"field": "state", "type": "nominal", "sort": "-x"},
+            "x": {"field": "cafes_per_100k", "type": "quantitative"},
+            "text": {"field": "cafes_per_100k", "type": "quantitative", "format": ".1f"}
           }
         }
       ]

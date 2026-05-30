@@ -144,7 +144,6 @@
     </div>
   </div>
 
-  <!-- SECTION 4 — Chart 11 -->
   <div class="section">
     <p class="section-label">Section 4 — Relationships</p>
     <h2>Where Does the Morning Coffee Crowd Come From?</h2>
@@ -153,6 +152,18 @@
       <h3>Residential to CBD café flow by state</h3>
       <p>Flow map — line width = relative flow volume · origin = residential region · destination = CBD café hub · Source: ABS + OpenStreetMap</p>
       <div id="chart11"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 — Chart 12 -->
+  <div class="section">
+    <p class="section-label">Section 4 — Relationships</p>
+    <h2>How Are Coffee Habits Connected?</h2>
+    <p>Coffee behaviour is not a single habit — it's a web of interconnected choices. Age shapes frequency, frequency drives takeaway preference, takeaway links to spending, and spending connects back to coffee type. This network diagram reveals those hidden relationships.</p>
+    <div class="chart-card">
+      <h3>Coffee habit network — nodes and relationships</h3>
+      <p>Network diagram — node size = centrality · edge weight = strength of relationship · Source: Roy Morgan Research</p>
+      <div id="chart12"></div>
     </div>
   </div>
 
@@ -173,6 +184,8 @@
     const trendsUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_consumption_trends.csv";
     const incomeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/income_spending.csv";
     const flowUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/flow_map.csv";
+    const nodesUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/network_nodes.csv";
+    const linksUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/network_links.csv";
 
     // CHART 1 — Choropleth map
     vegaEmbed('#chart1', {
@@ -492,21 +505,9 @@
             "latitude": {"field": "from_lat", "type": "quantitative"},
             "longitude2": {"field": "to_lon"},
             "latitude2": {"field": "to_lat"},
-            "strokeWidth": {
-              "field": "flow", "type": "quantitative",
-              "scale": {"range": [1, 8]},
-              "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Flow volume"}
-            },
-            "color": {
-              "field": "flow", "type": "quantitative",
-              "scale": {"scheme": "oranges", "domain": [1, 50]},
-              "legend": null
-            },
-            "tooltip": [
-              {"field": "state", "type": "nominal", "title": "State"},
-              {"field": "hub", "type": "nominal", "title": "CBD hub"},
-              {"field": "flow", "type": "quantitative", "title": "Flow index", "format": ".1f"}
-            ]
+            "strokeWidth": {"field": "flow", "type": "quantitative", "scale": {"range": [1, 8]}, "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Flow volume"}},
+            "color": {"field": "flow", "type": "quantitative", "scale": {"scheme": "oranges", "domain": [1, 50]}, "legend": null},
+            "tooltip": [{"field": "state", "type": "nominal", "title": "State"}, {"field": "hub", "type": "nominal", "title": "CBD hub"}, {"field": "flow", "type": "quantitative", "title": "Flow index", "format": ".1f"}]
           }
         },
         {
@@ -515,15 +516,8 @@
           "encoding": {
             "longitude": {"field": "to_lon", "type": "quantitative"},
             "latitude": {"field": "to_lat", "type": "quantitative"},
-            "size": {
-              "field": "flow", "type": "quantitative",
-              "scale": {"range": [50, 400]},
-              "legend": null
-            },
-            "tooltip": [
-              {"field": "hub", "type": "nominal", "title": "CBD hub"},
-              {"field": "flow", "type": "quantitative", "title": "Flow index", "format": ".1f"}
-            ]
+            "size": {"field": "flow", "type": "quantitative", "scale": {"range": [50, 400]}, "legend": null},
+            "tooltip": [{"field": "hub", "type": "nominal", "title": "CBD hub"}, {"field": "flow", "type": "quantitative", "title": "Flow index", "format": ".1f"}]
           }
         },
         {
@@ -533,6 +527,67 @@
             "longitude": {"field": "to_lon", "type": "quantitative"},
             "latitude": {"field": "to_lat", "type": "quantitative"},
             "text": {"field": "hub", "type": "nominal"}
+          }
+        }
+      ]
+    }, {"actions": false});
+
+    // CHART 12 — Network diagram
+    vegaEmbed('#chart12', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container", "height": 450, "background": "transparent",
+      "layer": [
+        {
+          "data": {"url": linksUrl},
+          "mark": {"type": "rule", "opacity": 0.6},
+          "encoding": {
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 600]}},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 320]}},
+            "x2": {"field": "x2"},
+            "y2": {"field": "y2"},
+            "strokeWidth": {
+              "field": "weight", "type": "quantitative",
+              "scale": {"range": [1, 6]},
+              "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Relationship strength"}
+            },
+            "color": {
+              "field": "weight", "type": "quantitative",
+              "scale": {"domain": [1, 4], "range": ["#6b4f35","#c8860a","#e8b84b"]},
+              "legend": null
+            },
+            "tooltip": [
+              {"field": "source", "type": "nominal", "title": "From"},
+              {"field": "target", "type": "nominal", "title": "To"},
+              {"field": "weight", "type": "quantitative", "title": "Strength"}
+            ]
+          }
+        },
+        {
+          "data": {"url": nodesUrl},
+          "mark": {"type": "circle", "opacity": 0.95},
+          "encoding": {
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 600]}},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 320]}},
+            "size": {"value": 1800},
+            "color": {
+              "field": "node", "type": "nominal",
+              "scale": {
+                "domain": ["Age","Frequency","Takeaway","Type","Spending","Home"],
+                "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#a08060","#f0e6d3"]
+              },
+              "legend": null
+            },
+            "tooltip": [{"field": "node", "type": "nominal", "title": "Node"}]
+          }
+        },
+        {
+          "data": {"url": nodesUrl},
+          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 13},
+          "encoding": {
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 600]}},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 320]}},
+            "text": {"field": "node", "type": "nominal"},
+            "color": {"value": "#1a0f00"}
           }
         }
       ]

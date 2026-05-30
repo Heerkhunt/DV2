@@ -133,6 +133,18 @@
     </div>
   </div>
 
+  <!-- SECTION 4 — Chart 10 -->
+  <div class="section">
+    <p class="section-label">Section 4 — Relationships</p>
+    <h2>Does Income Drive Coffee Spending?</h2>
+    <p>As Australian incomes have risen over the past decade, café spending has grown even faster — suggesting coffee is more than a habit, it's a lifestyle signal. The connected scatter plot traces this journey year by year, revealing how the two have moved together since 2015.</p>
+    <div class="chart-card">
+      <h3>Income index vs café spending index, 2015–2025</h3>
+      <p>Connected scatter plot — each point is one year · path shows progression over time · Source: ABS</p>
+      <div id="chart10"></div>
+    </div>
+  </div>
+
   <div class="footer">
     <p>Data sources: ABS Monthly Household Spending Indicator · Roy Morgan Research · OpenStreetMap · Canstar Blue</p>
     <p style="margin-top:8px">Created by Heer Khunt · FIT2179 Data Visualisation 2 · Monash University · 2026</p>
@@ -148,6 +160,7 @@
     const homeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/home_takeaway.csv";
     const spendingUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_spending_categories.csv";
     const trendsUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_consumption_trends.csv";
+    const incomeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/income_spending.csv";
 
     // CHART 1 — Choropleth map
     vegaEmbed('#chart1', {
@@ -359,7 +372,7 @@
       "config": {"background": "transparent", "view": {"stroke": "#3d2b1a"}}
     }, {"actions": false});
 
-    // CHART 9 — Treemap (inline data)
+    // CHART 9 — Treemap
     vegaEmbed('#chart9', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 450, "background": "transparent",
@@ -382,16 +395,10 @@
             "y2": {"field": "y2"},
             "color": {
               "field": "item", "type": "nominal",
-              "scale": {
-                "domain": ["Cafés","Takeaway","Pods","Beans","Instant"],
-                "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#a08060"]
-              },
+              "scale": {"domain": ["Cafés","Takeaway","Pods","Beans","Instant"], "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#a08060"]},
               "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Category"}
             },
-            "tooltip": [
-              {"field": "item", "type": "nominal", "title": "Category"},
-              {"field": "share", "type": "quantitative", "title": "Share (%)", "format": ".0f"}
-            ]
+            "tooltip": [{"field": "item", "type": "nominal", "title": "Category"}, {"field": "share", "type": "quantitative", "title": "Share (%)", "format": ".0f"}]
           }
         },
         {
@@ -410,6 +417,50 @@
             "y": {"field": "cy", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
             "text": {"field": "share", "type": "quantitative", "format": ".0f"},
             "color": {"value": "#1a0f00"}
+          }
+        }
+      ]
+    }, {"actions": false});
+
+    // CHART 10 — Connected scatter plot
+    vegaEmbed('#chart10', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container", "height": 450, "background": "transparent",
+      "data": {"url": incomeUrl},
+      "layer": [
+        {
+          "mark": {"type": "line", "color": "#6b4f35", "strokeWidth": 2, "opacity": 0.8},
+          "encoding": {
+            "x": {"field": "income_index", "type": "quantitative", "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "gridColor": "#2d1f0f"}, "title": "Household income index"},
+            "y": {"field": "cafe_spending_index", "type": "quantitative", "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "gridColor": "#2d1f0f"}, "title": "Café spending index ($M)"},
+            "order": {"field": "year", "type": "quantitative"}
+          }
+        },
+        {
+          "mark": {"type": "point", "filled": true, "size": 120},
+          "encoding": {
+            "x": {"field": "income_index", "type": "quantitative"},
+            "y": {"field": "cafe_spending_index", "type": "quantitative"},
+            "color": {
+              "field": "year", "type": "quantitative",
+              "scale": {"scheme": "oranges", "domain": [2015, 2025]},
+              "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Year"}
+            },
+            "tooltip": [
+              {"field": "year", "type": "quantitative", "title": "Year"},
+              {"field": "income_index", "type": "quantitative", "title": "Income index", "format": ".1f"},
+              {"field": "cafe_spending_index", "type": "quantitative", "title": "Café spending ($M)", "format": ",.0f"}
+            ]
+          }
+        },
+        {
+          "mark": {"type": "text", "align": "left", "dx": 8, "dy": -4, "fontSize": 11, "fontStyle": "italic"},
+          "transform": [{"filter": "datum.year === 2015 || datum.year === 2020 || datum.year === 2025"}],
+          "encoding": {
+            "x": {"field": "income_index", "type": "quantitative"},
+            "y": {"field": "cafe_spending_index", "type": "quantitative"},
+            "text": {"field": "year", "type": "quantitative"},
+            "color": {"value": "#f0e6d3"}
           }
         }
       ]

@@ -148,7 +148,6 @@
     const homeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/home_takeaway.csv";
     const spendingUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_spending_categories.csv";
     const trendsUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_consumption_trends.csv";
-    const treemapUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/spending_treemap.csv";
 
     // CHART 1 — Choropleth map
     vegaEmbed('#chart1', {
@@ -360,16 +359,19 @@
       "config": {"background": "transparent", "view": {"stroke": "#3d2b1a"}}
     }, {"actions": false});
 
-    // CHART 9 — Treemap
+    // CHART 9 — Treemap (inline data)
     vegaEmbed('#chart9', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 450, "background": "transparent",
-      "data": {"url": treemapUrl},
-      "transform": [
-        {"calculate": "(datum.x + datum.x2) / 2", "as": "cx"},
-        {"calculate": "(datum.y + datum.y2) / 2", "as": "cy"},
-        {"calculate": "datum.item + ' · ' + datum.share + '%'", "as": "label"}
-      ],
+      "data": {
+        "values": [
+          {"item": "Cafés", "x": 0, "y": 0, "x2": 58, "y2": 100, "share": 58, "cx": 29, "cy": 50},
+          {"item": "Takeaway", "x": 58, "y": 0, "x2": 78, "y2": 100, "share": 20, "cx": 68, "cy": 50},
+          {"item": "Pods", "x": 78, "y": 0, "x2": 91, "y2": 60, "share": 8, "cx": 84.5, "cy": 30},
+          {"item": "Beans", "x": 91, "y": 0, "x2": 100, "y2": 60, "share": 6, "cx": 95.5, "cy": 30},
+          {"item": "Instant", "x": 78, "y": 60, "x2": 100, "y2": 100, "share": 8, "cx": 89, "cy": 80}
+        ]
+      },
       "layer": [
         {
           "mark": {"type": "rect", "stroke": "#1a0f00", "strokeWidth": 2},
@@ -393,11 +395,20 @@
           }
         },
         {
-          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 14},
+          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 15},
           "encoding": {
             "x": {"field": "cx", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
             "y": {"field": "cy", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
-            "text": {"field": "label", "type": "nominal"},
+            "text": {"field": "item", "type": "nominal"},
+            "color": {"value": "#1a0f00"}
+          }
+        },
+        {
+          "mark": {"type": "text", "align": "center", "baseline": "middle", "fontSize": 13, "dy": 22},
+          "encoding": {
+            "x": {"field": "cx", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "y": {"field": "cy", "type": "quantitative", "axis": null, "scale": {"domain": [0, 100]}},
+            "text": {"field": "share", "type": "quantitative", "format": ".0f"},
             "color": {"value": "#1a0f00"}
           }
         }

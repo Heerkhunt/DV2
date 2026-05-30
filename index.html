@@ -541,8 +541,8 @@
           "data": {"url": linksUrl},
           "mark": {"type": "rule", "opacity": 0.6},
           "encoding": {
-            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 600]}},
-            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 320]}},
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [-50, 650]}},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [-20, 340]}},
             "x2": {"field": "x2"},
             "y2": {"field": "y2"},
             "strokeWidth": {
@@ -566,16 +566,16 @@
           "data": {"url": nodesUrl},
           "mark": {"type": "circle", "opacity": 0.95},
           "encoding": {
-            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 600]}},
-            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 320]}},
-            "size": {"value": 1800},
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [-50, 650]}},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [-20, 340]}},
+            "size": {"value": 2000},
             "color": {
               "field": "node", "type": "nominal",
               "scale": {
                 "domain": ["Age","Frequency","Takeaway","Type","Spending","Home"],
                 "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#a08060","#f0e6d3"]
               },
-              "legend": null
+              "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Node"}
             },
             "tooltip": [{"field": "node", "type": "nominal", "title": "Node"}]
           }
@@ -584,8 +584,8 @@
           "data": {"url": nodesUrl},
           "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 13},
           "encoding": {
-            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [0, 600]}},
-            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [0, 320]}},
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [-50, 650]}},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [-20, 340]}},
             "text": {"field": "node", "type": "nominal"},
             "color": {"value": "#1a0f00"}
           }

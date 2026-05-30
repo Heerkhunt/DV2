@@ -412,55 +412,192 @@ vegaEmbed('#chart5', {
     }, {"actions": false});
 
     // ── CHART 8 — Horizon graph ───────────────────────────────────────────
-    vegaEmbed('#chart8', {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": "container", "background": "transparent",
-      "data": {"url": trendsUrl},
-      "facet": {
-        "field": "state", "type": "nominal",
-        "sort": ["VIC","ACT","NSW","SA","WA","QLD","TAS","NT"],
-        "header": {"title": null, "labelColor": "#c8860a", "labelFontSize": 12, "labelFont": "DM Sans", "labelAlign": "left", "labelPadding": 4}
+vegaEmbed('#chart8', {
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 900,
+  "height": 480,
+  "padding": {"left": 60, "right": 20, "top": 20, "bottom": 40},
+  "background": "transparent",
+
+  "data": [
+    {"name": "raw", "url": trendsUrl},
+    {
+      "name": "states",
+      "source": "raw",
+      "transform": [
+        {"type": "aggregate", "groupby": ["state"],
+         "ops": ["min"], "fields": ["consumption_index"], "as": ["base"]}
+      ]
+    },
+    {
+      "name": "table",
+      "source": "raw",
+      "transform": [
+        {"type": "lookup", "from": "states", "key": "state",
+         "fields": ["state"], "values": ["base"], "as": ["base"]},
+        {"type": "formula", "as": "v", "expr": "datum.consumption_index - datum.base"},
+        {"type": "formula", "as": "band1", "expr": "min(datum.v, 10)"},
+        {"type": "formula", "as": "band2", "expr": "max(min(datum.v - 10, 10), 0)"},
+        {"type": "formula", "as": "band3", "expr": "max(min(datum.v - 20, 10), 0)"},
+        {"type": "formula", "as": "band4", "expr": "max(datum.v - 30, 0)"}
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "x",
+      "type": "linear",
+      "domain": {"data": "raw", "field": "year"},
+      "range": "width",
+      "zero": false
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": [0, 10],
+      "range": [50, 0],
+      "zero": true
+    },
+    {
+      "name": "row",
+      "type": "ordinal",
+      "domain": ["VIC","ACT","NSW","SA","WA","QLD","TAS","NT"],
+      "range": [0, 60, 120, 180, 240, 300, 360, 420]
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+      "from": {
+        "facet": {"name": "faceted", "data": "table", "groupby": "state"}
       },
-      "spec": {
-        "width": "container", "height": 50,
-        "layer": [
-          {
-            "mark": {"type": "area", "interpolate": "monotone", "opacity": 0.85, "color": "#8b5e3c"},
-            "encoding": {
-              "x": {"field": "year", "type": "quantitative", "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "format": "d", "labelFontSize": 10}, "title": null},
-              "y": {"field": "consumption_index", "type": "quantitative", "scale": {"domain": [45, 85]}, "axis": null}
-            }
-          },
-          {
-            "mark": {"type": "area", "interpolate": "monotone", "opacity": 0.5, "color": "#c8860a"},
-            "transform": [{"filter": "datum.consumption_index > 62"}],
-            "encoding": {
-              "x": {"field": "year", "type": "quantitative"},
-              "y": {"field": "consumption_index", "type": "quantitative", "scale": {"domain": [45, 85]}, "axis": null}
-            }
-          },
-          {
-            "mark": {"type": "area", "interpolate": "monotone", "opacity": 0.4, "color": "#e8b84b"},
-            "transform": [{"filter": "datum.consumption_index > 72"}],
-            "encoding": {
-              "x": {"field": "year", "type": "quantitative"},
-              "y": {"field": "consumption_index", "type": "quantitative", "scale": {"domain": [45, 85]}, "axis": null}
-            }
-          },
-          {
-            "mark": {"type": "line", "interpolate": "monotone", "strokeWidth": 2, "color": "#f0c060"},
-            "encoding": {
-              "x": {"field": "year", "type": "quantitative"},
-              "y": {"field": "consumption_index", "type": "quantitative", "scale": {"domain": [45, 85]}, "axis": null},
-              "tooltip": [{"field": "state", "type": "nominal", "title": "State"}, {"field": "year", "type": "quantitative", "title": "Year"}, {"field": "consumption_index", "type": "quantitative", "title": "Index", "format": ".1f"}]
+      "encode": {
+        "enter": {
+          "y": {"scale": "row", "field": "state"},
+          "width": {"signal": "width"},
+          "height": {"value": 50},
+          "clip": {"value": true}
+        }
+      },
+      "marks": [
+        {
+          "type": "area",
+          "from": {"data": "faceted"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "x", "field": "year"},
+              "y": {"scale": "y", "field": "band1"},
+              "y2": {"scale": "y", "value": 0},
+              "fill": {"value": "#8b5e3c"},
+              "fillOpacity": {"value": 0.6},
+              "interpolate": {"value": "monotone"}
             }
           }
-        ]
-      },
-      "columns": 1, "spacing": 3,
-      "config": {"background": "transparent", "view": {"stroke": "#3d2b1a"}}
-    }, {"actions": false});
+        },
+        {
+          "type": "area",
+          "from": {"data": "faceted"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "x", "field": "year"},
+              "y": {"scale": "y", "field": "band2"},
+              "y2": {"scale": "y", "value": 0},
+              "fill": {"value": "#c8860a"},
+              "fillOpacity": {"value": 0.7},
+              "interpolate": {"value": "monotone"}
+            }
+          }
+        },
+        {
+          "type": "area",
+          "from": {"data": "faceted"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "x", "field": "year"},
+              "y": {"scale": "y", "field": "band3"},
+              "y2": {"scale": "y", "value": 0},
+              "fill": {"value": "#e8b84b"},
+              "fillOpacity": {"value": 0.75},
+              "interpolate": {"value": "monotone"}
+            }
+          }
+        },
+        {
+          "type": "area",
+          "from": {"data": "faceted"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "x", "field": "year"},
+              "y": {"scale": "y", "field": "band4"},
+              "y2": {"scale": "y", "value": 0},
+              "fill": {"value": "#f0e6d3"},
+              "fillOpacity": {"value": 0.8},
+              "interpolate": {"value": "monotone"}
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "enter": {
+              "x": {"value": 0}, "x2": {"signal": "width"},
+              "y": {"value": 50},
+              "stroke": {"value": "#3d2b1a"},
+              "strokeWidth": {"value": 1}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": {"value": -4},
+              "y": {"value": 25},
+              "align": {"value": "right"},
+              "baseline": {"value": "middle"},
+              "fill": {"value": "#c8860a"},
+              "fontSize": {"value": 11},
+              "font": {"value": "DM Sans"},
+              "fontWeight": {"value": "500"},
+              "text": {"field": "state", "from": "faceted"}
+            }
+          },
+          "from": {
+            "data": "faceted",
+            "transform": [{"type": "aggregate", "groupby": ["state"]}]
+          }
+        }
+      ]
+    },
+    {
+      "type": "axis",
+      "scale": "x",
+      "orient": "bottom",
+      "offset": 430,
+      "encode": {
+        "labels": {
+          "update": {
+            "fill": {"value": "#a08060"},
+            "fontSize": {"value": 11},
+            "font": {"value": "DM Sans"},
+            "text": {"signal": "format(datum.value, 'd')"}
+          }
+        },
+        "ticks": {"update": {"stroke": {"value": "#3d2b1a"}}},
+        "domain": {"update": {"stroke": {"value": "#3d2b1a"}}}
+      }
+    }
+  ],
 
+  "config": {
+    "background": "transparent",
+    "group": {"fill": "transparent"},
+    "view": {"stroke": "transparent"}
+  }
+}, {"actions": false});
+    
     // ── CHART 9 — Treemap ─────────────────────────────────────────────────
     vegaEmbed('#chart9', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",

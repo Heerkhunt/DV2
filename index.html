@@ -114,10 +114,10 @@
   <div class="section">
     <p class="section-label">Section 3 — Spending & Trends</p>
     <h2>How Has Each State's Coffee Habit Grown?</h2>
-    <p>A horizon graph compresses multiple time-series into a compact, scannable format — darker bands indicate higher consumption. Victoria and the ACT show the steepest upward trajectory over the decade.</p>
+    <p>A horizon graph compresses multiple time-series into a compact, scannable format. Each row is one state — the filled area and gold line both rise steadily, showing universal growth in coffee consumption across Australia since 2015.</p>
     <div class="chart-card">
       <h3>Coffee consumption index by state, 2015–2025</h3>
-      <p>Horizon graph — each row is one state · darker colour = higher index · Source: ABS</p>
+      <p>Horizon graph — each row is one state · filled area + gold trend line · Source: ABS</p>
       <div id="chart8"></div>
     </div>
   </div>
@@ -298,7 +298,7 @@
       }
     }, {"actions": false});
 
-    // CHART 8 — Horizon graph
+    // CHART 8 — Horizon graph fixed
     vegaEmbed('#chart8', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container",
@@ -321,7 +321,7 @@
         "height": 50,
         "layer": [
           {
-            "mark": {"type": "area", "interpolate": "monotone"},
+            "mark": {"type": "area", "interpolate": "monotone", "opacity": 0.85, "color": "#8b5e3c"},
             "encoding": {
               "x": {
                 "field": "year", "type": "quantitative",
@@ -332,20 +332,47 @@
                 "field": "consumption_index", "type": "quantitative",
                 "scale": {"domain": [45, 85]},
                 "axis": null
-              },
-              "color": {
+              }
+            }
+          },
+          {
+            "mark": {"type": "area", "interpolate": "monotone", "opacity": 0.5, "color": "#c8860a"},
+            "transform": [{"filter": "datum.consumption_index > 62"}],
+            "encoding": {
+              "x": {"field": "year", "type": "quantitative"},
+              "y": {
                 "field": "consumption_index", "type": "quantitative",
-                "scale": {"domain": [45, 85], "range": ["#3d1f00","#8b5e3c","#c8860a","#e8b84b","#f0e6d3"]},
-                "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Index", "orient": "right"}
-              },
-              "opacity": {"value": 0.9}
+                "scale": {"domain": [45, 85]},
+                "axis": null
+              }
+            }
+          },
+          {
+            "mark": {"type": "area", "interpolate": "monotone", "opacity": 0.4, "color": "#e8b84b"},
+            "transform": [{"filter": "datum.consumption_index > 72"}],
+            "encoding": {
+              "x": {"field": "year", "type": "quantitative"},
+              "y": {
+                "field": "consumption_index", "type": "quantitative",
+                "scale": {"domain": [45, 85]},
+                "axis": null
+              }
             }
           },
           {
             "mark": {"type": "line", "interpolate": "monotone", "strokeWidth": 2, "color": "#f0c060"},
             "encoding": {
               "x": {"field": "year", "type": "quantitative"},
-              "y": {"field": "consumption_index", "type": "quantitative", "scale": {"domain": [45, 85]}}
+              "y": {
+                "field": "consumption_index", "type": "quantitative",
+                "scale": {"domain": [45, 85]},
+                "axis": null
+              },
+              "tooltip": [
+                {"field": "state", "type": "nominal", "title": "State"},
+                {"field": "year", "type": "quantitative", "title": "Year"},
+                {"field": "consumption_index", "type": "quantitative", "title": "Index", "format": ".1f"}
+              ]
             }
           }
         ]

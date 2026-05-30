@@ -106,6 +106,18 @@
     </div>
   </div>
 
+  <!-- SECTION 3 — Chart 7 -->
+  <div class="section">
+    <p class="section-label">Section 3 — Spending & Trends</p>
+    <h2>How Has Coffee Spending Evolved?</h2>
+    <p>Total coffee spending has grown dramatically since 2015 — driven primarily by café and restaurant spending. But the rise of takeaway coffee, pods and beans shows Australians are diversifying how they get their fix. Source: ABS Household Spending Indicator.</p>
+    <div class="chart-card">
+      <h3>Coffee spending by category, 2015–2025</h3>
+      <p>Streamgraph — flowing bands show how each spending category has grown over time · Source: ABS</p>
+      <div id="chart7"></div>
+    </div>
+  </div>
+
   <div class="footer">
     <p>Data sources: ABS Monthly Household Spending Indicator · Roy Morgan Research · OpenStreetMap · Canstar Blue</p>
     <p style="margin-top:8px">Created by Heer Khunt · FIT2179 Data Visualisation 2 · Monash University · 2026</p>
@@ -119,6 +131,7 @@
     const freqUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_frequency_age.csv";
     const typeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_type_age.csv";
     const homeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/home_takeaway.csv";
+    const spendingUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_spending_categories.csv";
 
     // CHART 1 — Choropleth map
     vegaEmbed('#chart1', {
@@ -233,9 +246,7 @@
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 300, "background": "transparent",
       "data": {"url": homeUrl},
-      "transform": [
-        {"pivot": "mode", "value": "percentage", "groupby": ["age_group"]}
-      ],
+      "transform": [{"pivot": "mode", "value": "percentage", "groupby": ["age_group"]}],
       "layer": [
         {
           "mark": {"type": "rule", "strokeWidth": 3, "color": "#6b4f35"},
@@ -262,6 +273,40 @@
           }
         }
       ]
+    }, {"actions": false});
+
+    // CHART 7 — Streamgraph
+    vegaEmbed('#chart7', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container", "height": 400, "background": "transparent",
+      "data": {"url": spendingUrl},
+      "mark": {"type": "area", "interpolate": "monotone", "opacity": 0.9},
+      "encoding": {
+        "x": {
+          "field": "year", "type": "quantitative",
+          "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "gridColor": "#2d1f0f", "format": "d"},
+          "title": "Year"
+        },
+        "y": {
+          "field": "spending_millions", "type": "quantitative",
+          "stack": "center",
+          "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "gridColor": "#2d1f0f"},
+          "title": null
+        },
+        "color": {
+          "field": "category", "type": "nominal",
+          "scale": {
+            "domain": ["Cafés & restaurants","Takeaway coffee","Pods & capsules","Beans & ground","Instant"],
+            "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#a08060"]
+          },
+          "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Category"}
+        },
+        "tooltip": [
+          {"field": "year", "type": "quantitative", "title": "Year"},
+          {"field": "category", "type": "nominal", "title": "Category"},
+          {"field": "spending_millions", "type": "quantitative", "title": "Spending ($M)", "format": ",.0f"}
+        ]
+      }
     }, {"actions": false});
 
   </script>

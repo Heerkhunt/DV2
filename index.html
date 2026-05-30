@@ -133,15 +133,26 @@
     </div>
   </div>
 
-  <!-- SECTION 4 — Chart 10 -->
   <div class="section">
     <p class="section-label">Section 4 — Relationships</p>
     <h2>Does Income Drive Coffee Spending?</h2>
-    <p>As Australian incomes have risen over the past decade, café spending has grown even faster — suggesting coffee is more than a habit, it's a lifestyle signal. The connected scatter plot traces this journey year by year, revealing how the two have moved together since 2015.</p>
+    <p>As Australian incomes have risen over the past decade, café spending has grown even faster — suggesting coffee is more than a habit, it's a lifestyle signal. The connected scatter plot traces this journey year by year.</p>
     <div class="chart-card">
       <h3>Income index vs café spending index, 2015–2025</h3>
       <p>Connected scatter plot — each point is one year · path shows progression over time · Source: ABS</p>
       <div id="chart10"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 — Chart 11 -->
+  <div class="section">
+    <p class="section-label">Section 4 — Relationships</p>
+    <h2>Where Does the Morning Coffee Crowd Come From?</h2>
+    <p>Every morning, Australians leave their suburbs and converge on CBD café hubs. This flow map shows the movement from residential regions to city café centres — Melbourne and Sydney draw the largest flows, driven by office commuter culture.</p>
+    <div class="chart-card">
+      <h3>Residential to CBD café flow by state</h3>
+      <p>Flow map — line width = relative flow volume · origin = residential region · destination = CBD café hub · Source: ABS + OpenStreetMap</p>
+      <div id="chart11"></div>
     </div>
   </div>
 
@@ -161,6 +172,7 @@
     const spendingUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/coffee_spending_categories.csv";
     const trendsUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_consumption_trends.csv";
     const incomeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/income_spending.csv";
+    const flowUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/flow_map.csv";
 
     // CHART 1 — Choropleth map
     vegaEmbed('#chart1', {
@@ -446,11 +458,7 @@
               "scale": {"scheme": "oranges", "domain": [2015, 2025]},
               "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Year"}
             },
-            "tooltip": [
-              {"field": "year", "type": "quantitative", "title": "Year"},
-              {"field": "income_index", "type": "quantitative", "title": "Income index", "format": ".1f"},
-              {"field": "cafe_spending_index", "type": "quantitative", "title": "Café spending ($M)", "format": ",.0f"}
-            ]
+            "tooltip": [{"field": "year", "type": "quantitative", "title": "Year"}, {"field": "income_index", "type": "quantitative", "title": "Income index", "format": ".1f"}, {"field": "cafe_spending_index", "type": "quantitative", "title": "Café spending ($M)", "format": ",.0f"}]
           }
         },
         {
@@ -461,6 +469,70 @@
             "y": {"field": "cafe_spending_index", "type": "quantitative"},
             "text": {"field": "year", "type": "quantitative"},
             "color": {"value": "#f0e6d3"}
+          }
+        }
+      ]
+    }, {"actions": false});
+
+    // CHART 11 — Flow map
+    vegaEmbed('#chart11', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container", "height": 550, "background": "transparent",
+      "projection": {"type": "mercator"},
+      "layer": [
+        {
+          "data": {"url": geoUrl, "format": {"type": "json", "property": "features"}},
+          "mark": {"type": "geoshape", "fill": "#2a1a08", "stroke": "#3d2b1a", "strokeWidth": 0.8}
+        },
+        {
+          "data": {"url": flowUrl},
+          "mark": {"type": "rule", "opacity": 0.7},
+          "encoding": {
+            "longitude": {"field": "from_lon", "type": "quantitative"},
+            "latitude": {"field": "from_lat", "type": "quantitative"},
+            "longitude2": {"field": "to_lon"},
+            "latitude2": {"field": "to_lat"},
+            "strokeWidth": {
+              "field": "flow", "type": "quantitative",
+              "scale": {"range": [1, 8]},
+              "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Flow volume"}
+            },
+            "color": {
+              "field": "flow", "type": "quantitative",
+              "scale": {"scheme": "oranges", "domain": [1, 50]},
+              "legend": null
+            },
+            "tooltip": [
+              {"field": "state", "type": "nominal", "title": "State"},
+              {"field": "hub", "type": "nominal", "title": "CBD hub"},
+              {"field": "flow", "type": "quantitative", "title": "Flow index", "format": ".1f"}
+            ]
+          }
+        },
+        {
+          "data": {"url": flowUrl},
+          "mark": {"type": "circle", "opacity": 0.9, "color": "#c8860a"},
+          "encoding": {
+            "longitude": {"field": "to_lon", "type": "quantitative"},
+            "latitude": {"field": "to_lat", "type": "quantitative"},
+            "size": {
+              "field": "flow", "type": "quantitative",
+              "scale": {"range": [50, 400]},
+              "legend": null
+            },
+            "tooltip": [
+              {"field": "hub", "type": "nominal", "title": "CBD hub"},
+              {"field": "flow", "type": "quantitative", "title": "Flow index", "format": ".1f"}
+            ]
+          }
+        },
+        {
+          "data": {"url": flowUrl},
+          "mark": {"type": "text", "dy": -12, "fontSize": 11, "fontWeight": "bold", "color": "#f0e6d3"},
+          "encoding": {
+            "longitude": {"field": "to_lon", "type": "quantitative"},
+            "latitude": {"field": "to_lat", "type": "quantitative"},
+            "text": {"field": "hub", "type": "nominal"}
           }
         }
       ]

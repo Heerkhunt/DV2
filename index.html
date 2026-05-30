@@ -598,50 +598,131 @@ vegaEmbed('#chart8', {
     }, {"actions": false});
 
     // ── CHART 11 — Flow map ───────────────────────────────────────────────
-    vegaEmbed('#chart11', {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": "container", "height": 550, "background": "transparent",
-      "projection": {"type": "mercator"},
-      "layer": [
-        {
-          "data": {"url": geoUrl, "format": {"type": "json", "property": "features"}},
-          "mark": {"type": "geoshape", "fill": "#2a1a08", "stroke": "#3d2b1a", "strokeWidth": 0.8}
-        },
-        {
-          "data": {"url": flowUrl},
-          "mark": {"type": "rule", "opacity": 0.7},
-          "encoding": {
-            "longitude":  {"field": "from_lon", "type": "quantitative"},
-            "latitude":   {"field": "from_lat", "type": "quantitative"},
-            "longitude2": {"field": "to_lon"},
-            "latitude2":  {"field": "to_lat"},
-            "strokeWidth": {"field": "flow", "type": "quantitative", "scale": {"range": [1, 8]}, "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Flow volume"}},
-            "color": {"field": "flow", "type": "quantitative", "scale": {"scheme": "oranges", "domain": [1, 50]}, "legend": null},
-            "tooltip": [{"field": "state", "type": "nominal", "title": "State"}, {"field": "hub", "type": "nominal", "title": "CBD hub"}, {"field": "flow", "type": "quantitative", "title": "Flow index", "format": ".1f"}]
-          }
-        },
-        {
-          "data": {"url": flowUrl},
-          "mark": {"type": "circle", "opacity": 0.9, "color": "#c8860a"},
-          "encoding": {
-            "longitude": {"field": "to_lon", "type": "quantitative"},
-            "latitude":  {"field": "to_lat", "type": "quantitative"},
-            "size": {"field": "flow", "type": "quantitative", "scale": {"range": [50, 400]}, "legend": null},
-            "tooltip": [{"field": "hub", "type": "nominal", "title": "CBD hub"}, {"field": "flow", "type": "quantitative", "title": "Flow index", "format": ".1f"}]
-          }
-        },
-        {
-          "data": {"url": flowUrl},
-          "mark": {"type": "text", "dy": -12, "fontSize": 11, "fontWeight": "bold", "color": "#f0e6d3"},
-          "encoding": {
-            "longitude": {"field": "to_lon", "type": "quantitative"},
-            "latitude":  {"field": "to_lat", "type": "quantitative"},
-            "text": {"field": "hub", "type": "nominal"}
-          }
-        }
-      ]
-    }, {"actions": false});
+vegaEmbed('#chart11', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container", "height": 550, "background": "transparent",
+  "projection": {"type": "mercator"},
+  "layer": [
+    {
+      "data": {"url": geoUrl, "format": {"type": "json", "property": "features"}},
+      "mark": {"type": "geoshape", "fill": "#2a1a08", "stroke": "#3d2b1a", "strokeWidth": 0.8}
+    },
+    {
+      "data": {
+        "values": [
+          {"from_lon":144.95,"from_lat":-37.81,"to_lon":144.70,"to_lat":-37.40,"flow":48,"hub":"Melbourne"},
+          {"from_lon":144.95,"from_lat":-37.81,"to_lon":145.20,"to_lat":-38.10,"flow":42,"hub":"Melbourne"},
+          {"from_lon":144.95,"from_lat":-37.81,"to_lon":144.30,"to_lat":-37.90,"flow":38,"hub":"Melbourne"},
+          {"from_lon":144.95,"from_lat":-37.81,"to_lon":145.50,"to_lat":-37.60,"flow":35,"hub":"Melbourne"},
+          {"from_lon":144.95,"from_lat":-37.81,"to_lon":144.80,"to_lat":-38.40,"flow":30,"hub":"Melbourne"},
+          {"from_lon":144.95,"from_lat":-37.81,"to_lon":143.90,"to_lat":-37.50,"flow":25,"hub":"Melbourne"},
 
+          {"from_lon":151.21,"from_lat":-33.87,"to_lon":151.00,"to_lat":-33.60,"flow":46,"hub":"Sydney"},
+          {"from_lon":151.21,"from_lat":-33.87,"to_lon":151.50,"to_lat":-33.70,"flow":40,"hub":"Sydney"},
+          {"from_lon":151.21,"from_lat":-33.87,"to_lon":150.90,"to_lat":-34.10,"flow":36,"hub":"Sydney"},
+          {"from_lon":151.21,"from_lat":-33.87,"to_lon":151.60,"to_lat":-34.00,"flow":32,"hub":"Sydney"},
+          {"from_lon":151.21,"from_lat":-33.87,"to_lon":150.70,"to_lat":-33.80,"flow":28,"hub":"Sydney"},
+          {"from_lon":151.21,"from_lat":-33.87,"to_lon":151.30,"to_lat":-34.20,"flow":22,"hub":"Sydney"},
+
+          {"from_lon":153.02,"from_lat":-27.47,"to_lon":152.80,"to_lat":-27.20,"flow":34,"hub":"Brisbane"},
+          {"from_lon":153.02,"from_lat":-27.47,"to_lon":153.30,"to_lat":-27.30,"flow":29,"hub":"Brisbane"},
+          {"from_lon":153.02,"from_lat":-27.47,"to_lon":152.90,"to_lat":-27.70,"flow":25,"hub":"Brisbane"},
+          {"from_lon":153.02,"from_lat":-27.47,"to_lon":153.20,"to_lat":-27.70,"flow":20,"hub":"Brisbane"},
+          {"from_lon":153.02,"from_lat":-27.47,"to_lon":152.60,"to_lat":-27.50,"flow":16,"hub":"Brisbane"},
+
+          {"from_lon":138.60,"from_lat":-34.93,"to_lon":138.40,"to_lat":-34.70,"flow":22,"hub":"Adelaide"},
+          {"from_lon":138.60,"from_lat":-34.93,"to_lon":138.80,"to_lat":-34.75,"flow":19,"hub":"Adelaide"},
+          {"from_lon":138.60,"from_lat":-34.93,"to_lon":138.50,"to_lat":-35.10,"flow":16,"hub":"Adelaide"},
+          {"from_lon":138.60,"from_lat":-34.93,"to_lon":138.30,"to_lat":-35.00,"flow":13,"hub":"Adelaide"},
+
+          {"from_lon":115.86,"from_lat":-31.95,"to_lon":115.70,"to_lat":-31.75,"flow":26,"hub":"Perth"},
+          {"from_lon":115.86,"from_lat":-31.95,"to_lon":116.00,"to_lat":-31.80,"flow":22,"hub":"Perth"},
+          {"from_lon":115.86,"from_lat":-31.95,"to_lon":115.80,"to_lat":-32.10,"flow":18,"hub":"Perth"},
+          {"from_lon":115.86,"from_lat":-31.95,"to_lon":115.60,"to_lat":-32.00,"flow":14,"hub":"Perth"},
+
+          {"from_lon":149.13,"from_lat":-35.28,"to_lon":149.00,"to_lat":-35.10,"flow":18,"hub":"Canberra"},
+          {"from_lon":149.13,"from_lat":-35.28,"to_lon":149.30,"to_lat":-35.20,"flow":15,"hub":"Canberra"},
+          {"from_lon":149.13,"from_lat":-35.28,"to_lon":149.10,"to_lat":-35.45,"flow":12,"hub":"Canberra"},
+
+          {"from_lon":147.33,"from_lat":-42.88,"to_lon":147.10,"to_lat":-42.70,"flow":12,"hub":"Hobart"},
+          {"from_lon":147.33,"from_lat":-42.88,"to_lon":147.50,"to_lat":-42.80,"flow":10,"hub":"Hobart"},
+          {"from_lon":147.33,"from_lat":-42.88,"to_lon":147.20,"to_lat":-43.00,"flow":8,"hub":"Hobart"},
+
+          {"from_lon":130.84,"from_lat":-12.46,"to_lon":130.70,"to_lat":-12.30,"flow":8,"hub":"Darwin"},
+          {"from_lon":130.84,"from_lat":-12.46,"to_lon":131.00,"to_lat":-12.40,"flow":6,"hub":"Darwin"},
+          {"from_lon":130.84,"from_lat":-12.46,"to_lon":130.80,"to_lat":-12.60,"flow":5,"hub":"Darwin"}
+        ]
+      },
+      "mark": {"type": "rule", "opacity": 0.75},
+      "encoding": {
+        "longitude":  {"field": "from_lon", "type": "quantitative"},
+        "latitude":   {"field": "from_lat", "type": "quantitative"},
+        "longitude2": {"field": "to_lon"},
+        "latitude2":  {"field": "to_lat"},
+        "strokeWidth": {
+          "field": "flow", "type": "quantitative",
+          "scale": {"domain": [5, 48], "range": [0.5, 6]},
+          "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Flow volume"}
+        },
+        "stroke": {
+          "field": "flow", "type": "quantitative",
+          "scale": {"domain": [5, 48], "range": ["#8b5e3c", "#c8860a"]},
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "hub",  "type": "nominal",      "title": "CBD hub"},
+          {"field": "flow", "type": "quantitative", "title": "Flow index", "format": ".0f"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"hub": "Melbourne", "lon": 144.95, "lat": -37.81, "flow": 48},
+          {"hub": "Sydney",    "lon": 151.21, "lat": -33.87, "flow": 46},
+          {"hub": "Brisbane",  "lon": 153.02, "lat": -27.47, "flow": 34},
+          {"hub": "Perth",     "lon": 115.86, "lat": -31.95, "flow": 26},
+          {"hub": "Adelaide",  "lon": 138.60, "lat": -34.93, "flow": 22},
+          {"hub": "Canberra",  "lon": 149.13, "lat": -35.28, "flow": 18},
+          {"hub": "Hobart",    "lon": 147.33, "lat": -42.88, "flow": 12},
+          {"hub": "Darwin",    "lon": 130.84, "lat": -12.46, "flow": 8}
+        ]
+      },
+      "mark": {"type": "circle", "opacity": 1.0, "color": "#c8860a"},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude":  {"field": "lat", "type": "quantitative"},
+        "size": {
+          "field": "flow", "type": "quantitative",
+          "scale": {"domain": [5, 48], "range": [60, 400]},
+          "legend": null
+        },
+        "tooltip": [{"field": "hub", "type": "nominal", "title": "CBD hub"}]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"hub": "Melbourne", "lon": 144.95, "lat": -37.81},
+          {"hub": "Sydney",    "lon": 151.21, "lat": -33.87},
+          {"hub": "Brisbane",  "lon": 153.02, "lat": -27.47},
+          {"hub": "Perth",     "lon": 115.86, "lat": -31.95},
+          {"hub": "Adelaide",  "lon": 138.60, "lat": -34.93},
+          {"hub": "Canberra",  "lon": 149.13, "lat": -35.28},
+          {"hub": "Hobart",    "lon": 147.33, "lat": -42.88},
+          {"hub": "Darwin",    "lon": 130.84, "lat": -12.46}
+        ]
+      },
+      "mark": {"type": "text", "dy": -14, "fontSize": 11, "fontWeight": "bold", "font": "DM Sans", "color": "#f0e6d3"},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude":  {"field": "lat", "type": "quantitative"},
+        "text":      {"field": "hub", "type": "nominal"}
+      }
+    }
+  ]
+}, {"actions": false});
+    
     // ── CHART 12 — Network diagram ────────────────────────────────────────
     vegaEmbed('#chart12', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",

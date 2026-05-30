@@ -290,31 +290,74 @@
       }
     }, {"actions": false});
 
-    // ── CHART 5 — Small multiples ─────────────────────────────────────────
-    vegaEmbed('#chart5', {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": 160, "height": 160, "background": "transparent",
-      "data": {"url": typeUrl},
-      "facet": {
-        "field": "age_group", "type": "nominal",
-        "sort": ["14–24","25–34","35–49","50–64","65+"],
-        "header": {"title": null, "labelColor": "#c8860a", "labelFontSize": 13, "labelFont": "Playfair Display"}
-      },
-      "spec": {
-        "mark": {"type": "arc", "innerRadius": 40, "outerRadius": 75},
-        "encoding": {
-          "theta": {"field": "percentage", "type": "quantitative"},
-          "color": {
-            "field": "coffee_type", "type": "nominal",
-            "scale": {"domain": ["Latte","Flat white","Cappuccino","Espresso","Long black"], "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#f0e6d3"]},
-            "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Coffee type"}
-          },
-          "tooltip": [{"field": "age_group", "type": "nominal", "title": "Age group"}, {"field": "coffee_type", "type": "nominal", "title": "Type"}, {"field": "percentage", "type": "quantitative", "title": "%", "format": ".0f"}]
+    // ── CHART 5 — Small multiples (line charts) ───────────────────────────
+vegaEmbed('#chart5', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "data": {"url": typeUrl},
+  "facet": {
+    "field": "age_group", "type": "nominal",
+    "sort": ["14–24","25–34","35–49","50–64","65+"],
+    "header": {
+      "title": null,
+      "labelColor": "#c8860a",
+      "labelFontSize": 13,
+      "labelFont": "Playfair Display"
+    }
+  },
+  "spec": {
+    "width": 160,
+    "height": 160,
+    "mark": {"type": "line", "point": {"filled": true, "size": 40}, "strokeWidth": 2, "interpolate": "monotone"},
+    "encoding": {
+      "x": {
+        "field": "coffee_type", "type": "nominal",
+        "sort": ["Latte","Flat white","Cappuccino","Espresso","Long black"],
+        "axis": {
+          "labelColor": "#a08060",
+          "labelFontSize": 9,
+          "labelAngle": -40,
+          "ticks": false,
+          "domain": false,
+          "title": null,
+          "gridColor": "#2d1f0f"
         }
       },
-      "columns": 5,
-      "config": {"background": "transparent"}
-    }, {"actions": false});
+      "y": {
+        "field": "percentage", "type": "quantitative",
+        "axis": {
+          "labelColor": "#a08060",
+          "labelFontSize": 9,
+          "gridColor": "#2d1f0f",
+          "tickCount": 4,
+          "title": null,
+          "domain": false
+        }
+      },
+      "color": {
+        "field": "coffee_type", "type": "nominal",
+        "sort": ["Latte","Flat white","Cappuccino","Espresso","Long black"],
+        "scale": {
+          "domain": ["Latte","Flat white","Cappuccino","Espresso","Long black"],
+          "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#f0e6d3"]
+        },
+        "legend": {
+          "labelColor": "#a08060",
+          "titleColor": "#a08060",
+          "title": "Coffee type",
+          "orient": "right"
+        }
+      },
+      "tooltip": [
+        {"field": "age_group",   "type": "nominal",      "title": "Age group"},
+        {"field": "coffee_type", "type": "nominal",      "title": "Type"},
+        {"field": "percentage",  "type": "quantitative", "title": "%", "format": ".0f"}
+      ]
+    }
+  },
+  "columns": 5,
+  "config": {"background": "transparent"}
+}, {"actions": false});
 
     // ── CHART 6 — Dumbbell chart ──────────────────────────────────────────
     vegaEmbed('#chart6', {

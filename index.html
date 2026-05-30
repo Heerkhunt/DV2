@@ -182,7 +182,7 @@
   <div class="section">
     <p class="section-label">Section 5 — HD Custom Visual</p>
     <h2>How Does Australia's Café Culture Differ Across States?</h2>
-    <p>Four metrics, eight states, one interactive dashboard. Each panel ranks all states by a different dimension of café culture — density, spending, brand presence, and overall score. Hover any bar to trace that state across all panels simultaneously. Use the dropdown to re-rank by the metric that matters most.</p>
+    <p>Four metrics, eight states, one interactive dashboard. Each panel ranks all states by a different dimension of café culture — density, spending, brand presence, and overall score. Hover any bar to trace that state across all panels simultaneously.</p>
     <div class="chart-card">
       <h3>State café culture — small multiples ranking dashboard</h3>
       <p>Small multiples + ranking + hover interaction + annotation · Overview → filter → details on demand (Shneiderman's mantra) · Source: OpenStreetMap + ABS + Roy Morgan Research</p>
@@ -207,8 +207,6 @@
     const trendsUrl   = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_consumption_trends.csv";
     const incomeUrl   = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/income_spending.csv";
     const flowUrl     = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/flow_map.csv";
-    const nodesUrl    = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/network_nodes.csv";
-    const linksUrl    = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/network_links.csv";
 
     // ── CHART 1 — Choropleth map ──────────────────────────────────────────
     vegaEmbed('#chart1', {
@@ -630,26 +628,15 @@
     }, {"actions": false});
 
     // ── CHART 13 — Custom Combined Idiom ──────────────────────────────────
-    // Small multiples + ranking + annotation + hover interaction
-    // Shneiderman's mantra: overview → filter → details on demand
     vegaEmbed('#chart13', {
       "$schema": "https://vega.github.io/schema/vega/v5.json",
-      "width": 900,
-      "height": 520,
-      "padding": {"top": 24, "left": 12, "right": 12, "bottom": 16},
+      "width": 860,
+      "height": 420,
+      "padding": {"top": 40, "left": 20, "right": 20, "bottom": 60},
       "background": "transparent",
+      "autosize": "none",
 
       "signals": [
-        {
-          "name": "selectedMetric",
-          "value": "culture_score",
-          "bind": {
-            "input": "select",
-            "options": ["culture_score", "spending_score", "cafe_density", "brand_presence"],
-            "labels": ["Overall Culture Score", "Spending Score", "Café Density (per 100k)", "Brand Presence (%)"],
-            "name": "Rank states by:  "
-          }
-        },
         {
           "name": "hoveredState",
           "value": null,
@@ -664,218 +651,272 @@
         {
           "name": "states",
           "values": [
-            {"state": "ACT", "state_full": "Australian Capital Territory", "cafe_density": 44.01, "spending_score": 506.1, "brand_presence": 68.0,  "culture_score": 210.5},
-            {"state": "TAS", "state_full": "Tasmania",                      "cafe_density": 43.01, "spending_score": 494.6, "brand_presence": 62.5,  "culture_score": 205.0},
-            {"state": "SA",  "state_full": "South Australia",               "cafe_density": 34.17, "spending_score": 392.9, "brand_presence": 71.1,  "culture_score": 167.1},
-            {"state": "VIC", "state_full": "Victoria",                      "cafe_density": 34.04, "spending_score": 391.4, "brand_presence": 61.0,  "culture_score": 164.5},
-            {"state": "NT",  "state_full": "Northern Territory",            "cafe_density": 30.89, "spending_score": 355.2, "brand_presence": 64.4,  "culture_score": 151.1},
-            {"state": "WA",  "state_full": "Western Australia",             "cafe_density": 29.85, "spending_score": 343.3, "brand_presence": 55.9,  "culture_score": 144.8},
-            {"state": "QLD", "state_full": "Queensland",                    "cafe_density": 28.04, "spending_score": 322.4, "brand_presence": 69.0,  "culture_score": 139.3},
-            {"state": "NSW", "state_full": "New South Wales",               "cafe_density": 26.27, "spending_score": 302.0, "brand_presence": 59.1,  "culture_score": 129.3}
+            {"state":"ACT","cafe_density":44.01,"spending_score":506.1,"brand_presence":68.0,"culture_score":210.5},
+            {"state":"TAS","cafe_density":43.01,"spending_score":494.6,"brand_presence":62.5,"culture_score":205.0},
+            {"state":"SA", "cafe_density":34.17,"spending_score":392.9,"brand_presence":71.1,"culture_score":167.1},
+            {"state":"VIC","cafe_density":34.04,"spending_score":391.4,"brand_presence":61.0,"culture_score":164.5},
+            {"state":"NT", "cafe_density":30.89,"spending_score":355.2,"brand_presence":64.4,"culture_score":151.1},
+            {"state":"WA", "cafe_density":29.85,"spending_score":343.3,"brand_presence":55.9,"culture_score":144.8},
+            {"state":"QLD","cafe_density":28.04,"spending_score":322.4,"brand_presence":69.0,"culture_score":139.3},
+            {"state":"NSW","cafe_density":26.27,"spending_score":302.0,"brand_presence":59.1,"culture_score":129.3}
           ]
         },
         {
-          "name": "metrics",
-          "values": [
-            {"metric": "culture_score",  "label": "Overall Culture Score", "domainMax": 250, "unit": ""},
-            {"metric": "spending_score", "label": "Spending Score",        "domainMax": 560, "unit": ""},
-            {"metric": "cafe_density",   "label": "Café Density / 100k",  "domainMax": 50,  "unit": "/100k"},
-            {"metric": "brand_presence", "label": "Brand Presence",       "domainMax": 80,  "unit": "%"}
-          ]
+          "name": "culture_sorted",
+          "source": "states",
+          "transform": [{"type":"collect","sort":{"field":"culture_score","order":"descending"}}]
+        },
+        {
+          "name": "spending_sorted",
+          "source": "states",
+          "transform": [{"type":"collect","sort":{"field":"spending_score","order":"descending"}}]
+        },
+        {
+          "name": "density_sorted",
+          "source": "states",
+          "transform": [{"type":"collect","sort":{"field":"cafe_density","order":"descending"}}]
+        },
+        {
+          "name": "brand_sorted",
+          "source": "states",
+          "transform": [{"type":"collect","sort":{"field":"brand_presence","order":"descending"}}]
         }
       ],
 
-      "layout": {"columns": 4, "padding": {"row": 48, "column": 44}},
-
       "marks": [
+
+        // ── PANEL 1: Overall Culture Score ──
         {
           "type": "group",
-          "from": {"facet": {"name": "mf", "data": "metrics", "field": "metric"}},
-          "title": {
-            "text": {"signal": "parent.label"},
-            "color": "#c8860a",
-            "font": "Playfair Display",
-            "fontSize": 12,
-            "fontWeight": "bold",
-            "anchor": "start",
-            "frame": "group",
-            "offset": 8
-          },
-          "encode": {
-            "enter": {"width": {"value": 180}, "height": {"value": 240}}
-          },
-          "signals": [
-            {"name": "pm",  "update": "parent.metric"},
-            {"name": "pdm", "update": "parent.domainMax"},
-            {"name": "pu",  "update": "parent.unit"}
-          ],
-          "data": [
-            {
-              "name": "ps",
-              "source": "states",
-              "transform": [
-                {"type": "collect", "sort": {"field": {"signal": "pm"}, "order": "descending"}}
-              ]
-            }
-          ],
+          "encode": {"enter": {"x":{"value":0},"y":{"value":0},"width":{"value":180},"height":{"value":300}}},
           "scales": [
-            {
-              "name": "y",
-              "type": "band",
-              "domain": {"data": "ps", "field": "state"},
-              "range": [0, 240],
-              "padding": 0.2
-            },
-            {
-              "name": "x",
-              "type": "linear",
-              "domain": [0, {"signal": "pdm"}],
-              "range": [0, 180],
-              "zero": true,
-              "nice": false
-            }
+            {"name":"y1","type":"band","domain":{"data":"culture_sorted","field":"state"},"range":[0,300],"padding":0.2},
+            {"name":"x1","type":"linear","domain":[0,250],"range":[0,180],"zero":true}
           ],
           "marks": [
             {
-              "type": "rect",
-              "from": {"data": "ps"},
-              "encode": {
-                "update": {
-                  "x": {"value": 0},
-                  "x2": {"scale": "x", "field": {"signal": "pm"}},
-                  "y": {"scale": "y", "field": "state"},
-                  "height": {"scale": "y", "band": 1},
-                  "cornerRadiusTopRight":    {"value": 3},
-                  "cornerRadiusBottomRight": {"value": 3},
-                  "fill": [
-                    {"test": "hoveredState === datum.state", "value": "#f0c060"},
-                    {"test": "selectedMetric === pm && (datum.state === 'ACT' || datum.state === 'TAS')", "value": "#c8860a"},
-                    {"test": "datum.state === 'ACT' || datum.state === 'TAS'", "value": "#e8b84b"},
-                    {"value": "#5c3317"}
-                  ],
-                  "fillOpacity": [
-                    {"test": "hoveredState === datum.state", "value": 1.0},
-                    {"value": 0.85}
-                  ]
-                }
-              }
+              "type":"text",
+              "encode":{"enter":{"x":{"value":0},"y":{"value":-14},"text":{"value":"Overall Culture Score"},"fill":{"value":"#c8860a"},"fontSize":{"value":11},"fontWeight":{"value":"bold"},"font":{"value":"Playfair Display"}}}
             },
             {
-              "type": "text",
-              "from": {"data": "ps"},
-              "encode": {
-                "update": {
-                  "x": {"value": 4},
-                  "y": {"scale": "y", "field": "state", "band": 0.5},
-                  "baseline": {"value": "middle"},
-                  "text": {"field": "state"},
-                  "fontSize": {"value": 11},
-                  "font": {"value": "DM Sans"},
-                  "fontWeight": [
-                    {"test": "hoveredState === datum.state", "value": "bold"},
-                    {"test": "datum.state === 'ACT' || datum.state === 'TAS'", "value": "500"},
-                    {"value": "300"}
-                  ],
-                  "fill": [
-                    {"test": "hoveredState === datum.state", "value": "#1a0f00"},
-                    {"test": "datum.state === 'ACT' || datum.state === 'TAS'", "value": "#1a0f00"},
-                    {"value": "#f0e6d3"}
-                  ]
-                }
-              }
+              "type":"rect","from":{"data":"culture_sorted"},
+              "encode":{"update":{
+                "x":{"value":0},"x2":{"scale":"x1","field":"culture_score"},
+                "y":{"scale":"y1","field":"state"},"height":{"scale":"y1","band":1},
+                "cornerRadiusTopRight":{"value":3},"cornerRadiusBottomRight":{"value":3},
+                "fill":[
+                  {"test":"hoveredState === datum.state","value":"#f0c060"},
+                  {"test":"datum.state==='ACT'||datum.state==='TAS'","value":"#c8860a"},
+                  {"value":"#5c3317"}
+                ],
+                "fillOpacity":[{"test":"hoveredState===datum.state","value":1},{"value":0.85}]
+              }}
             },
             {
-              "type": "text",
-              "from": {"data": "ps"},
-              "encode": {
-                "update": {
-                  "x": {"scale": "x", "field": {"signal": "pm"}, "offset": 4},
-                  "y": {"scale": "y", "field": "state", "band": 0.5},
-                  "baseline": {"value": "middle"},
-                  "text": {"signal": "format(datum[pm], '.1f') + pu"},
-                  "fontSize": {"value": 9},
-                  "font": {"value": "DM Sans"},
-                  "fill": [
-                    {"test": "hoveredState === datum.state", "value": "#1a0f00"},
-                    {"test": "selectedMetric === pm && (datum.state === 'ACT' || datum.state === 'TAS')", "value": "#c8860a"},
-                    {"value": "#6b4f35"}
-                  ],
-                  "fontWeight": [
-                    {"test": "selectedMetric === pm && (datum.state === 'ACT' || datum.state === 'TAS')", "value": "bold"},
-                    {"value": "300"}
-                  ]
-                }
-              }
+              "type":"text","from":{"data":"culture_sorted"},
+              "encode":{"update":{
+                "x":{"value":3},"y":{"scale":"y1","field":"state","band":0.5},"baseline":{"value":"middle"},
+                "text":{"field":"state"},"fontSize":{"value":11},"font":{"value":"DM Sans"},
+                "fontWeight":[{"test":"hoveredState===datum.state","value":"bold"},{"value":"300"}],
+                "fill":[
+                  {"test":"hoveredState===datum.state||datum.state==='ACT'||datum.state==='TAS'","value":"#1a0f00"},
+                  {"value":"#f0e6d3"}
+                ]
+              }}
             },
             {
-              "type": "rule",
-              "encode": {
-                "enter": {
-                  "x": {"value": 0}, "x2": {"value": 180}, "y": {"value": 0},
-                  "stroke": {"value": "#3d2b1a"}, "strokeWidth": {"value": 1}
-                }
-              }
+              "type":"text","from":{"data":"culture_sorted"},
+              "encode":{"update":{
+                "x":{"scale":"x1","field":"culture_score","offset":3},"y":{"scale":"y1","field":"state","band":0.5},"baseline":{"value":"middle"},
+                "text":{"signal":"format(datum.culture_score,'.0f')"},"fontSize":{"value":9},"font":{"value":"DM Sans"},
+                "fill":[{"test":"hoveredState===datum.state","value":"#1a0f00"},{"value":"#6b4f35"}]
+              }}
             }
           ]
         },
 
+        // ── PANEL 2: Spending Score ──
         {
           "type": "group",
-          "encode": {
-            "enter": {
-              "x": {"value": 0}, "y": {"value": 440},
-              "width": {"value": 900}, "height": {"value": 60}
-            }
-          },
+          "encode": {"enter": {"x":{"value":236},"y":{"value":0},"width":{"value":180},"height":{"value":300}}},
+          "scales": [
+            {"name":"y2","type":"band","domain":{"data":"spending_sorted","field":"state"},"range":[0,300],"padding":0.2},
+            {"name":"x2","type":"linear","domain":[0,560],"range":[0,180],"zero":true}
+          ],
           "marks": [
             {
-              "type": "rule",
-              "encode": {
-                "enter": {
-                  "x": {"value": 0}, "x2": {"value": 900}, "y": {"value": 0},
-                  "stroke": {"value": "#3d2b1a"}, "strokeWidth": {"value": 1}
-                }
-              }
+              "type":"text",
+              "encode":{"enter":{"x":{"value":0},"y":{"value":-14},"text":{"value":"Spending Score"},"fill":{"value":"#c8860a"},"fontSize":{"value":11},"fontWeight":{"value":"bold"},"font":{"value":"Playfair Display"}}}
             },
             {
-              "type": "text",
-              "encode": {
-                "update": {
-                  "x": {"value": 16}, "y": {"value": 18},
-                  "text": {
-                    "signal": "hoveredState ? '▶  ' + hoveredState + ' — highlighted across all four metric panels' : 'Hover any bar to highlight that state across all panels  ·  Use the dropdown above to re-rank'"
-                  },
-                  "fill": {"signal": "hoveredState ? '#c8860a' : '#6b4f35'"},
-                  "fontSize": {"value": 12},
-                  "fontStyle": {"value": "italic"},
-                  "font": {"value": "DM Sans"}
-                }
-              }
+              "type":"rect","from":{"data":"spending_sorted"},
+              "encode":{"update":{
+                "x":{"value":0},"x2":{"scale":"x2","field":"spending_score"},
+                "y":{"scale":"y2","field":"state"},"height":{"scale":"y2","band":1},
+                "cornerRadiusTopRight":{"value":3},"cornerRadiusBottomRight":{"value":3},
+                "fill":[
+                  {"test":"hoveredState===datum.state","value":"#f0c060"},
+                  {"test":"datum.state==='ACT'||datum.state==='TAS'","value":"#c8860a"},
+                  {"value":"#5c3317"}
+                ],
+                "fillOpacity":[{"test":"hoveredState===datum.state","value":1},{"value":0.85}]
+              }}
             },
             {
-              "type": "text",
-              "encode": {
-                "enter": {
-                  "x": {"value": 16}, "y": {"value": 40},
-                  "text": {"value": "Key insight: ACT & TAS lead on density and spending per capita  ·  SA tops brand presence  ·  NSW leads volume but ranks last per capita"},
-                  "fill": {"value": "#5c3317"},
-                  "fontSize": {"value": 11},
-                  "font": {"value": "DM Sans"}
-                }
-              }
+              "type":"text","from":{"data":"spending_sorted"},
+              "encode":{"update":{
+                "x":{"value":3},"y":{"scale":"y2","field":"state","band":0.5},"baseline":{"value":"middle"},
+                "text":{"field":"state"},"fontSize":{"value":11},"font":{"value":"DM Sans"},
+                "fontWeight":[{"test":"hoveredState===datum.state","value":"bold"},{"value":"300"}],
+                "fill":[
+                  {"test":"hoveredState===datum.state||datum.state==='ACT'||datum.state==='TAS'","value":"#1a0f00"},
+                  {"value":"#f0e6d3"}
+                ]
+              }}
+            },
+            {
+              "type":"text","from":{"data":"spending_sorted"},
+              "encode":{"update":{
+                "x":{"scale":"x2","field":"spending_score","offset":3},"y":{"scale":"y2","field":"state","band":0.5},"baseline":{"value":"middle"},
+                "text":{"signal":"format(datum.spending_score,'.0f')"},"fontSize":{"value":9},"font":{"value":"DM Sans"},
+                "fill":[{"test":"hoveredState===datum.state","value":"#1a0f00"},{"value":"#6b4f35"}]
+              }}
             }
           ]
+        },
+
+        // ── PANEL 3: Café Density ──
+        {
+          "type": "group",
+          "encode": {"enter": {"x":{"value":472},"y":{"value":0},"width":{"value":180},"height":{"value":300}}},
+          "scales": [
+            {"name":"y3","type":"band","domain":{"data":"density_sorted","field":"state"},"range":[0,300],"padding":0.2},
+            {"name":"x3","type":"linear","domain":[0,50],"range":[0,180],"zero":true}
+          ],
+          "marks": [
+            {
+              "type":"text",
+              "encode":{"enter":{"x":{"value":0},"y":{"value":-14},"text":{"value":"Café Density / 100k"},"fill":{"value":"#c8860a"},"fontSize":{"value":11},"fontWeight":{"value":"bold"},"font":{"value":"Playfair Display"}}}
+            },
+            {
+              "type":"rect","from":{"data":"density_sorted"},
+              "encode":{"update":{
+                "x":{"value":0},"x2":{"scale":"x3","field":"cafe_density"},
+                "y":{"scale":"y3","field":"state"},"height":{"scale":"y3","band":1},
+                "cornerRadiusTopRight":{"value":3},"cornerRadiusBottomRight":{"value":3},
+                "fill":[
+                  {"test":"hoveredState===datum.state","value":"#f0c060"},
+                  {"test":"datum.state==='ACT'||datum.state==='TAS'","value":"#c8860a"},
+                  {"value":"#5c3317"}
+                ],
+                "fillOpacity":[{"test":"hoveredState===datum.state","value":1},{"value":0.85}]
+              }}
+            },
+            {
+              "type":"text","from":{"data":"density_sorted"},
+              "encode":{"update":{
+                "x":{"value":3},"y":{"scale":"y3","field":"state","band":0.5},"baseline":{"value":"middle"},
+                "text":{"field":"state"},"fontSize":{"value":11},"font":{"value":"DM Sans"},
+                "fontWeight":[{"test":"hoveredState===datum.state","value":"bold"},{"value":"300"}],
+                "fill":[
+                  {"test":"hoveredState===datum.state||datum.state==='ACT'||datum.state==='TAS'","value":"#1a0f00"},
+                  {"value":"#f0e6d3"}
+                ]
+              }}
+            },
+            {
+              "type":"text","from":{"data":"density_sorted"},
+              "encode":{"update":{
+                "x":{"scale":"x3","field":"cafe_density","offset":3},"y":{"scale":"y3","field":"state","band":0.5},"baseline":{"value":"middle"},
+                "text":{"signal":"format(datum.cafe_density,'.1f')+'/100k'"},"fontSize":{"value":9},"font":{"value":"DM Sans"},
+                "fill":[{"test":"hoveredState===datum.state","value":"#1a0f00"},{"value":"#6b4f35"}]
+              }}
+            }
+          ]
+        },
+
+        // ── PANEL 4: Brand Presence ──
+        {
+          "type": "group",
+          "encode": {"enter": {"x":{"value":708},"y":{"value":0},"width":{"value":180},"height":{"value":300}}},
+          "scales": [
+            {"name":"y4","type":"band","domain":{"data":"brand_sorted","field":"state"},"range":[0,300],"padding":0.2},
+            {"name":"x4","type":"linear","domain":[0,80],"range":[0,180],"zero":true}
+          ],
+          "marks": [
+            {
+              "type":"text",
+              "encode":{"enter":{"x":{"value":0},"y":{"value":-14},"text":{"value":"Brand Presence"},"fill":{"value":"#c8860a"},"fontSize":{"value":11},"fontWeight":{"value":"bold"},"font":{"value":"Playfair Display"}}}
+            },
+            {
+              "type":"rect","from":{"data":"brand_sorted"},
+              "encode":{"update":{
+                "x":{"value":0},"x2":{"scale":"x4","field":"brand_presence"},
+                "y":{"scale":"y4","field":"state"},"height":{"scale":"y4","band":1},
+                "cornerRadiusTopRight":{"value":3},"cornerRadiusBottomRight":{"value":3},
+                "fill":[
+                  {"test":"hoveredState===datum.state","value":"#f0c060"},
+                  {"test":"datum.state==='SA'","value":"#c8860a"},
+                  {"value":"#5c3317"}
+                ],
+                "fillOpacity":[{"test":"hoveredState===datum.state","value":1},{"value":0.85}]
+              }}
+            },
+            {
+              "type":"text","from":{"data":"brand_sorted"},
+              "encode":{"update":{
+                "x":{"value":3},"y":{"scale":"y4","field":"state","band":0.5},"baseline":{"value":"middle"},
+                "text":{"field":"state"},"fontSize":{"value":11},"font":{"value":"DM Sans"},
+                "fontWeight":[{"test":"hoveredState===datum.state","value":"bold"},{"value":"300"}],
+                "fill":[
+                  {"test":"hoveredState===datum.state||datum.state==='SA'","value":"#1a0f00"},
+                  {"value":"#f0e6d3"}
+                ]
+              }}
+            },
+            {
+              "type":"text","from":{"data":"brand_sorted"},
+              "encode":{"update":{
+                "x":{"scale":"x4","field":"brand_presence","offset":3},"y":{"scale":"y4","field":"state","band":0.5},"baseline":{"value":"middle"},
+                "text":{"signal":"format(datum.brand_presence,'.1f')+'%'"},"fontSize":{"value":9},"font":{"value":"DM Sans"},
+                "fill":[{"test":"hoveredState===datum.state","value":"#1a0f00"},{"value":"#6b4f35"}]
+              }}
+            }
+          ]
+        },
+
+        // ── Annotation bar ──
+        {
+          "type":"rule",
+          "encode":{"enter":{"x":{"value":0},"x2":{"value":860},"y":{"value":318},"stroke":{"value":"#3d2b1a"},"strokeWidth":{"value":1}}}
+        },
+        {
+          "type":"text",
+          "encode":{
+            "update":{
+              "x":{"value":0},"y":{"value":338},
+              "text":{"signal":"hoveredState ? '▶  ' + hoveredState + ' — highlighted across all four panels' : 'Hover any bar to highlight that state across all panels simultaneously'"},
+              "fill":{"signal":"hoveredState ? '#c8860a' : '#6b4f35'"},
+              "fontSize":{"value":12},"fontStyle":{"value":"italic"},"font":{"value":"DM Sans"}
+            }
+          }
+        },
+        {
+          "type":"text",
+          "encode":{
+            "enter":{
+              "x":{"value":0},"y":{"value":362},
+              "text":{"value":"Key insight: ACT & TAS lead on density and spending per capita  ·  SA tops brand presence  ·  NSW leads raw volume but ranks last per capita"},
+              "fill":{"value":"#5c3317"},"fontSize":{"value":11},"font":{"value":"DM Sans"}
+            }
+          }
         }
       ],
 
       "config": {
         "background": "transparent",
         "group": {"fill": "transparent"},
-        "view":  {"stroke": "transparent"},
-        "axis":  {
-          "labelColor": "#a08060", "titleColor": "#a08060",
-          "gridColor": "#2d1f0f",  "domainColor": "#3d2b1a"
-        }
+        "view":  {"stroke": "transparent"}
       }
     }, {"actions": false});
 

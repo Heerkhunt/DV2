@@ -34,7 +34,7 @@
     <p>From Melbourne's laneway espresso bars to Darwin's drive-through chains — exploring how café culture shapes Australian life.</p>
   </div>
 
-  <!-- SECTION 1 -->
+  <!-- SECTION 1 — Chart 1 -->
   <div class="section">
     <p class="section-label">Section 1 — Australia's Café Landscape</p>
     <h2>Where Does Coffee Culture Run Deepest?</h2>
@@ -46,6 +46,18 @@
     </div>
   </div>
 
+  <!-- SECTION 1 — Chart 2 -->
+  <div class="section">
+    <p class="section-label">Section 1 — Australia's Café Landscape</p>
+    <h2>Where Are Australia's Cafés?</h2>
+    <p>Over 4,500 cafés mapped across Australia reveal a striking coastal concentration — Melbourne, Sydney and Brisbane dominate, while the interior remains sparse. Each dot is a real café from OpenStreetMap.</p>
+    <div class="chart-card">
+      <h3>Café locations across Australia</h3>
+      <p>Each dot = one café · Source: OpenStreetMap via Overpass API · Mercator projection</p>
+      <div id="chart2"></div>
+    </div>
+  </div>
+
   <div class="footer">
     <p>Data sources: ABS Monthly Household Spending Indicator · Roy Morgan Research · OpenStreetMap · Canstar Blue</p>
     <p style="margin-top:8px">Created by Heer Khunt · FIT2179 Data Visualisation 2 · Monash University · 2026</p>
@@ -54,6 +66,7 @@
   <script>
     const geoUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/australia_states_simplified.geojson";
     const cultureUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_culture_score.csv";
+    const cafeUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/australian_cafe_locations.csv";
 
     // CHART 1 — Choropleth map
     vegaEmbed('#chart1', {
@@ -88,15 +101,8 @@
               "field": "spending_score",
               "type": "quantitative",
               "title": "Spending score",
-              "scale": {
-                "scheme": "oranges",
-                "domain": [250, 550]
-              },
-              "legend": {
-                "labelColor": "#a08060",
-                "titleColor": "#a08060",
-                "title": "Spending score"
-              }
+              "scale": {"scheme": "oranges", "domain": [250, 550]},
+              "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Spending score"}
             },
             "tooltip": [
               {"field": "properties.STATE_NAME", "type": "nominal", "title": "State"},
@@ -106,6 +112,48 @@
         }
       ]
     }, {"actions": false});
+
+    // CHART 2 — Dot density map
+    vegaEmbed('#chart2', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 500,
+      "background": "transparent",
+      "projection": {"type": "mercator"},
+      "layer": [
+        {
+          "data": {
+            "url": geoUrl,
+            "format": {"type": "json", "property": "features"}
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "#2a1a08",
+            "stroke": "#3d2b1a",
+            "strokeWidth": 0.8
+          }
+        },
+        {
+          "data": {"url": cafeUrl},
+          "mark": {
+            "type": "circle",
+            "size": 6,
+            "opacity": 0.6,
+            "color": "#c8860a"
+          },
+          "encoding": {
+            "longitude": {"field": "lon", "type": "quantitative"},
+            "latitude": {"field": "lat", "type": "quantitative"},
+            "tooltip": [
+              {"field": "name", "type": "nominal", "title": "Café"},
+              {"field": "state", "type": "nominal", "title": "State"},
+              {"field": "city", "type": "nominal", "title": "City"}
+            ]
+          }
+        }
+      ]
+    }, {"actions": false});
+
   </script>
 </body>
 </html>

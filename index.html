@@ -34,7 +34,6 @@
     <p>From Melbourne's laneway espresso bars to Darwin's drive-through chains — exploring how café culture shapes Australian life.</p>
   </div>
 
-  <!-- SECTION 1 — Chart 1 -->
   <div class="section">
     <p class="section-label">Section 1 — Australia's Café Landscape</p>
     <h2>Where Does Coffee Culture Run Deepest?</h2>
@@ -46,7 +45,6 @@
     </div>
   </div>
 
-  <!-- SECTION 1 — Chart 2 -->
   <div class="section">
     <p class="section-label">Section 1 — Australia's Café Landscape</p>
     <h2>Where Are Australia's Cafés?</h2>
@@ -58,7 +56,6 @@
     </div>
   </div>
 
-  <!-- SECTION 1 — Chart 3 -->
   <div class="section">
     <p class="section-label">Section 1 — Australia's Café Landscape</p>
     <h2>Which States Have the Most Cafés Per Person?</h2>
@@ -70,7 +67,6 @@
     </div>
   </div>
 
-  <!-- SECTION 2 — Chart 4 -->
   <div class="section">
     <p class="section-label">Section 2 — Who Drinks Coffee?</p>
     <h2>How Often Does Each Generation Reach for a Cup?</h2>
@@ -82,7 +78,6 @@
     </div>
   </div>
 
-  <!-- SECTION 2 — Chart 5 -->
   <div class="section">
     <p class="section-label">Section 2 — Who Drinks Coffee?</p>
     <h2>What Does Each Generation Order?</h2>
@@ -94,7 +89,6 @@
     </div>
   </div>
 
-  <!-- SECTION 2 — Chart 6 -->
   <div class="section">
     <p class="section-label">Section 2 — Who Drinks Coffee?</p>
     <h2>Café or Kitchen — Where Do Australians Make Their Coffee?</h2>
@@ -106,7 +100,6 @@
     </div>
   </div>
 
-  <!-- SECTION 3 — Chart 7 -->
   <div class="section">
     <p class="section-label">Section 3 — Spending & Trends</p>
     <h2>How Has Coffee Spending Evolved?</h2>
@@ -118,7 +111,6 @@
     </div>
   </div>
 
-  <!-- SECTION 3 — Chart 8 -->
   <div class="section">
     <p class="section-label">Section 3 — Spending & Trends</p>
     <h2>How Has Each State's Coffee Habit Grown?</h2>
@@ -306,15 +298,14 @@
       }
     }, {"actions": false});
 
-    // CHART 8 — Horizon graph (faceted small multiples area charts)
+    // CHART 8 — Horizon graph
     vegaEmbed('#chart8', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container",
       "background": "transparent",
       "data": {"url": trendsUrl},
       "facet": {
-        "field": "state",
-        "type": "nominal",
+        "field": "state", "type": "nominal",
         "sort": ["VIC","ACT","NSW","SA","WA","QLD","TAS","NT"],
         "header": {
           "title": null,
@@ -330,37 +321,37 @@
         "height": 50,
         "layer": [
           {
-            "mark": {"type": "area", "interpolate": "monotone", "opacity": 1},
+            "mark": {"type": "area", "interpolate": "monotone"},
             "encoding": {
               "x": {
                 "field": "year", "type": "quantitative",
-                "axis": {"labelColor": "#a08060", "titleColor": "#a08060", "gridColor": "#2d1f0f", "format": "d", "labelFontSize": 10},
+                "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "format": "d", "labelFontSize": 10},
                 "title": null
               },
               "y": {
                 "field": "consumption_index", "type": "quantitative",
-                "scale": {"domain": [40, 80]},
-                "axis": null,
-                "title": null
+                "scale": {"domain": [45, 85]},
+                "axis": null
               },
               "color": {
                 "field": "consumption_index", "type": "quantitative",
-                "scale": {"domain": [40, 80], "range": ["#5c3317","#c8860a","#e8b84b"]},
-                "legend": null
-              }
+                "scale": {"domain": [45, 85], "range": ["#3d1f00","#8b5e3c","#c8860a","#e8b84b","#f0e6d3"]},
+                "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Index", "orient": "right"}
+              },
+              "opacity": {"value": 0.9}
             }
           },
           {
-            "mark": {"type": "line", "interpolate": "monotone", "strokeWidth": 1.5, "color": "#f0e6d3", "opacity": 0.4},
+            "mark": {"type": "line", "interpolate": "monotone", "strokeWidth": 2, "color": "#f0c060"},
             "encoding": {
               "x": {"field": "year", "type": "quantitative"},
-              "y": {"field": "consumption_index", "type": "quantitative", "scale": {"domain": [40, 80]}}
+              "y": {"field": "consumption_index", "type": "quantitative", "scale": {"domain": [45, 85]}}
             }
           }
         ]
       },
       "columns": 1,
-      "spacing": 2,
+      "spacing": 3,
       "config": {"background": "transparent", "view": {"stroke": "#3d2b1a"}}
     }, {"actions": false});
 

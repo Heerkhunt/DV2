@@ -34,10 +34,78 @@
     <p>From Melbourne's laneway espresso bars to Darwin's drive-through chains — exploring how café culture shapes Australian life.</p>
   </div>
 
+  <!-- SECTION 1 -->
+  <div class="section">
+    <p class="section-label">Section 1 — Australia's Café Landscape</p>
+    <h2>Where Does Coffee Culture Run Deepest?</h2>
+    <p>Coffee spending varies significantly across Australia's states and territories. The ACT and Tasmania lead in per-capita café spending, driven by dense urban café ecosystems and high disposable incomes.</p>
+    <div class="chart-card">
+      <h3>Coffee spending score by state</h3>
+      <p>Derived from ABS household spending data, normalised per capita · Albers conic projection</p>
+      <div id="chart1"></div>
+    </div>
+  </div>
+
   <div class="footer">
     <p>Data sources: ABS Monthly Household Spending Indicator · Roy Morgan Research · OpenStreetMap · Canstar Blue</p>
     <p style="margin-top:8px">Created by Heer Khunt · FIT2179 Data Visualisation 2 · Monash University · 2026</p>
   </div>
 
+  <script>
+    const geoUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/australia_states_simplified.geojson";
+    const cultureUrl = "https://raw.githubusercontent.com/Heerkhunt/DV2/refs/heads/main/Data%20copy/state_culture_score.csv";
+
+    // CHART 1 — Choropleth map
+    vegaEmbed('#chart1', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": "container",
+      "height": 500,
+      "background": "transparent",
+      "projection": {
+        "type": "conicEqualArea",
+        "parallels": [-18, -36],
+        "rotate": [-132, 0]
+      },
+      "layer": [
+        {
+          "data": {
+            "url": geoUrl,
+            "format": {"type": "json", "property": "features"}
+          },
+          "transform": [
+            {
+              "lookup": "properties.STATE_NAME",
+              "from": {
+                "data": {"url": cultureUrl},
+                "key": "state_full",
+                "fields": ["spending_score", "state"]
+              }
+            }
+          ],
+          "mark": {"type": "geoshape", "stroke": "#3d2b1a", "strokeWidth": 1},
+          "encoding": {
+            "color": {
+              "field": "spending_score",
+              "type": "quantitative",
+              "title": "Spending score",
+              "scale": {
+                "scheme": "oranges",
+                "domain": [250, 550]
+              },
+              "legend": {
+                "labelColor": "#a08060",
+                "titleColor": "#a08060",
+                "title": "Spending score"
+              }
+            },
+            "tooltip": [
+              {"field": "properties.STATE_NAME", "type": "nominal", "title": "State"},
+              {"field": "spending_score", "type": "quantitative", "title": "Spending score", "format": ".1f"}
+            ]
+          }
+        }
+      ]
+    }, {"actions": false});
+  </script>
 </body>
 </html>

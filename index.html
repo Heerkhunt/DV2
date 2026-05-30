@@ -532,22 +532,32 @@
       ]
     }, {"actions": false});
 
-    // CHART 12 — Network diagram
+    // CHART 12 — Network diagram (inline coords)
     vegaEmbed('#chart12', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": "container", "height": 450, "background": "transparent",
       "layer": [
         {
-          "data": {"url": linksUrl},
-          "mark": {"type": "rule", "opacity": 0.6},
+          "data": {
+            "values": [
+              {"x": 150, "y": 200, "x2": 300, "y2": 100, "source": "Age", "target": "Frequency", "weight": 3},
+              {"x": 150, "y": 200, "x2": 300, "y2": 320, "source": "Age", "target": "Type", "weight": 2},
+              {"x": 300, "y": 100, "x2": 550, "y2": 200, "source": "Frequency", "target": "Takeaway", "weight": 3},
+              {"x": 550, "y": 200, "x2": 750, "y2": 100, "source": "Takeaway", "target": "Spending", "weight": 4},
+              {"x": 300, "y": 320, "x2": 750, "y2": 100, "source": "Type", "target": "Spending", "weight": 2},
+              {"x": 150, "y": 320, "x2": 300, "y2": 100, "source": "Home", "target": "Frequency", "weight": 2},
+              {"x": 150, "y": 320, "x2": 750, "y2": 100, "source": "Home", "target": "Spending", "weight": 1}
+            ]
+          },
+          "mark": {"type": "rule", "opacity": 0.7},
           "encoding": {
-            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [-50, 650]}},
-            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [-20, 340]}},
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [50, 900]}},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [50, 400]}},
             "x2": {"field": "x2"},
             "y2": {"field": "y2"},
             "strokeWidth": {
               "field": "weight", "type": "quantitative",
-              "scale": {"range": [1, 6]},
+              "scale": {"range": [1, 7]},
               "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Relationship strength"}
             },
             "color": {
@@ -563,12 +573,21 @@
           }
         },
         {
-          "data": {"url": nodesUrl},
+          "data": {
+            "values": [
+              {"node": "Age",       "x": 150, "y": 200},
+              {"node": "Frequency", "x": 300, "y": 100},
+              {"node": "Takeaway",  "x": 550, "y": 200},
+              {"node": "Type",      "x": 300, "y": 320},
+              {"node": "Spending",  "x": 750, "y": 100},
+              {"node": "Home",      "x": 150, "y": 320}
+            ]
+          },
           "mark": {"type": "circle", "opacity": 0.95},
           "encoding": {
-            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [-50, 650]}},
-            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [-20, 340]}},
-            "size": {"value": 2000},
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [50, 900]}},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [50, 400]}},
+            "size": {"value": 2500},
             "color": {
               "field": "node", "type": "nominal",
               "scale": {
@@ -581,11 +600,20 @@
           }
         },
         {
-          "data": {"url": nodesUrl},
+          "data": {
+            "values": [
+              {"node": "Age",       "x": 150, "y": 200},
+              {"node": "Frequency", "x": 300, "y": 100},
+              {"node": "Takeaway",  "x": 550, "y": 200},
+              {"node": "Type",      "x": 300, "y": 320},
+              {"node": "Spending",  "x": 750, "y": 100},
+              {"node": "Home",      "x": 150, "y": 320}
+            ]
+          },
           "mark": {"type": "text", "align": "center", "baseline": "middle", "fontWeight": "bold", "fontSize": 13},
           "encoding": {
-            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [-50, 650]}},
-            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [-20, 340]}},
+            "x": {"field": "x", "type": "quantitative", "axis": null, "scale": {"domain": [50, 900]}},
+            "y": {"field": "y", "type": "quantitative", "axis": null, "scale": {"domain": [50, 400]}},
             "text": {"field": "node", "type": "nominal"},
             "color": {"value": "#1a0f00"}
           }

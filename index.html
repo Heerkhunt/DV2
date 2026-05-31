@@ -597,7 +597,7 @@ vegaEmbed('#chart8', {
       ]
     }, {"actions": false});
 
-    // ── CHART 11 — Flow map ───────────────────────────────────────────────
+   // ── CHART 11 — Flow map ───────────────────────────────────────────────
 vegaEmbed('#chart11', {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container", "height": 550, "background": "transparent",
@@ -610,48 +610,33 @@ vegaEmbed('#chart11', {
     {
       "data": {
         "values": [
-          {"from_lon":139.5, "from_lat":-34.5, "to_lon":144.95,"to_lat":-37.81,"flow":48,"hub":"Melbourne"},
-          {"from_lon":147.5, "from_lat":-34.0, "to_lon":144.95,"to_lat":-37.81,"flow":42,"hub":"Melbourne"},
-          {"from_lon":141.0, "from_lat":-40.5, "to_lon":144.95,"to_lat":-37.81,"flow":38,"hub":"Melbourne"},
-          {"from_lon":148.5, "from_lat":-40.0, "to_lon":144.95,"to_lat":-37.81,"flow":35,"hub":"Melbourne"},
-          {"from_lon":138.0, "from_lat":-37.5, "to_lon":144.95,"to_lat":-37.81,"flow":30,"hub":"Melbourne"},
-          {"from_lon":149.5, "from_lat":-36.5, "to_lon":144.95,"to_lat":-37.81,"flow":25,"hub":"Melbourne"},
+          {"from_lon":115.86,"from_lat":-31.95, "to_lon":144.95,"to_lat":-37.81,"flow":38,"origin":"Perth",    "hub":"Melbourne"},
+          {"from_lon":138.60,"from_lat":-34.93, "to_lon":144.95,"to_lat":-37.81,"flow":44,"origin":"Adelaide", "hub":"Melbourne"},
+          {"from_lon":153.02,"from_lat":-27.47, "to_lon":144.95,"to_lat":-37.81,"flow":32,"origin":"Brisbane", "hub":"Melbourne"},
+          {"from_lon":151.21,"from_lat":-33.87, "to_lon":144.95,"to_lat":-37.81,"flow":48,"origin":"Sydney",   "hub":"Melbourne"},
+          {"from_lon":149.13,"from_lat":-35.28, "to_lon":144.95,"to_lat":-37.81,"flow":42,"origin":"Canberra", "hub":"Melbourne"},
+          {"from_lon":147.33,"from_lat":-42.88, "to_lon":144.95,"to_lat":-37.81,"flow":28,"origin":"Hobart",   "hub":"Melbourne"},
+          {"from_lon":130.84,"from_lat":-12.46, "to_lon":144.95,"to_lat":-37.81,"flow":18,"origin":"Darwin",   "hub":"Melbourne"},
+          {"from_lon":133.88,"from_lat":-23.70, "to_lon":144.95,"to_lat":-37.81,"flow":14,"origin":"Alice Springs","hub":"Melbourne"},
+          {"from_lon":153.40,"from_lat":-28.00, "to_lon":144.95,"to_lat":-37.81,"flow":22,"origin":"Gold Coast","hub":"Melbourne"},
+          {"from_lon":150.89,"from_lat":-34.42, "to_lon":144.95,"to_lat":-37.81,"flow":30,"origin":"Wollongong","hub":"Melbourne"},
+          {"from_lon":143.85,"from_lat":-37.55, "to_lon":144.95,"to_lat":-37.81,"flow":50,"origin":"Ballarat", "hub":"Melbourne"},
+          {"from_lon":144.35,"from_lat":-36.76, "to_lon":144.95,"to_lat":-37.81,"flow":46,"origin":"Bendigo",  "hub":"Melbourne"},
+          {"from_lon":146.42,"from_lat":-38.18, "to_lon":144.95,"to_lat":-37.81,"flow":40,"origin":"Latrobe Valley","hub":"Melbourne"},
+          {"from_lon":145.13,"from_lat":-37.99, "to_lon":144.95,"to_lat":-37.81,"flow":45,"origin":"Frankston","hub":"Melbourne"},
 
-          {"from_lon":148.0, "from_lat":-31.0, "to_lon":151.21,"to_lat":-33.87,"flow":46,"hub":"Sydney"},
-          {"from_lon":154.5, "from_lat":-31.5, "to_lon":151.21,"to_lat":-33.87,"flow":40,"hub":"Sydney"},
-          {"from_lon":147.5, "from_lat":-36.0, "to_lon":151.21,"to_lat":-33.87,"flow":36,"hub":"Sydney"},
-          {"from_lon":154.5, "from_lat":-36.0, "to_lon":151.21,"to_lat":-33.87,"flow":32,"hub":"Sydney"},
-          {"from_lon":146.5, "from_lat":-33.5, "to_lon":151.21,"to_lat":-33.87,"flow":28,"hub":"Sydney"},
-          {"from_lon":153.5, "from_lat":-37.0, "to_lon":151.21,"to_lat":-33.87,"flow":22,"hub":"Sydney"},
-
-          {"from_lon":150.0, "from_lat":-24.5, "to_lon":153.02,"to_lat":-27.47,"flow":34,"hub":"Brisbane"},
-          {"from_lon":155.5, "from_lat":-25.0, "to_lon":153.02,"to_lat":-27.47,"flow":29,"hub":"Brisbane"},
-          {"from_lon":149.5, "from_lat":-28.5, "to_lon":153.02,"to_lat":-27.47,"flow":25,"hub":"Brisbane"},
-          {"from_lon":155.5, "from_lat":-29.5, "to_lon":153.02,"to_lat":-27.47,"flow":20,"hub":"Brisbane"},
-          {"from_lon":151.0, "from_lat":-30.5, "to_lon":153.02,"to_lat":-27.47,"flow":16,"hub":"Brisbane"},
-
-          {"from_lon":134.0, "from_lat":-32.5, "to_lon":138.60,"to_lat":-34.93,"flow":22,"hub":"Adelaide"},
-          {"from_lon":141.5, "from_lat":-32.5, "to_lon":138.60,"to_lat":-34.93,"flow":19,"hub":"Adelaide"},
-          {"from_lon":134.5, "from_lat":-37.5, "to_lon":138.60,"to_lat":-34.93,"flow":16,"hub":"Adelaide"},
-          {"from_lon":141.5, "from_lat":-37.5, "to_lon":138.60,"to_lat":-34.93,"flow":13,"hub":"Adelaide"},
-
-          {"from_lon":111.0, "from_lat":-29.5, "to_lon":115.86,"to_lat":-31.95,"flow":26,"hub":"Perth"},
-          {"from_lon":119.5, "from_lat":-29.0, "to_lon":115.86,"to_lat":-31.95,"flow":22,"hub":"Perth"},
-          {"from_lon":111.0, "from_lat":-34.5, "to_lon":115.86,"to_lat":-31.95,"flow":18,"hub":"Perth"},
-          {"from_lon":119.5, "from_lat":-34.5, "to_lon":115.86,"to_lat":-31.95,"flow":14,"hub":"Perth"},
-
-          {"from_lon":146.5, "from_lat":-33.5, "to_lon":149.13,"to_lat":-35.28,"flow":18,"hub":"Canberra"},
-          {"from_lon":151.5, "from_lat":-33.5, "to_lon":149.13,"to_lat":-35.28,"flow":15,"hub":"Canberra"},
-          {"from_lon":147.5, "from_lat":-37.0, "to_lon":149.13,"to_lat":-35.28,"flow":12,"hub":"Canberra"},
-
-          {"from_lon":144.5, "from_lat":-41.5, "to_lon":147.33,"to_lat":-42.88,"flow":12,"hub":"Hobart"},
-          {"from_lon":149.5, "from_lat":-41.5, "to_lon":147.33,"to_lat":-42.88,"flow":10,"hub":"Hobart"},
-
-          {"from_lon":128.5, "from_lat":-14.5, "to_lon":130.84,"to_lat":-12.46,"flow":8,"hub":"Darwin"},
-          {"from_lon":133.0, "from_lat":-13.5, "to_lon":130.84,"to_lat":-12.46,"flow":6,"hub":"Darwin"}
+          {"from_lon":115.86,"from_lat":-31.95, "to_lon":151.21,"to_lat":-33.87,"flow":24,"origin":"Perth",    "hub":"Sydney"},
+          {"from_lon":138.60,"from_lat":-34.93, "to_lon":151.21,"to_lat":-33.87,"flow":30,"origin":"Adelaide", "hub":"Sydney"},
+          {"from_lon":153.02,"from_lat":-27.47, "to_lon":151.21,"to_lat":-33.87,"flow":44,"origin":"Brisbane", "hub":"Sydney"},
+          {"from_lon":130.84,"from_lat":-12.46, "to_lon":151.21,"to_lat":-33.87,"flow":12,"origin":"Darwin",   "hub":"Sydney"},
+          {"from_lon":149.13,"from_lat":-35.28, "to_lon":151.21,"to_lat":-33.87,"flow":40,"origin":"Canberra", "hub":"Sydney"},
+          {"from_lon":152.90,"from_lat":-31.43, "to_lon":151.21,"to_lat":-33.87,"flow":36,"origin":"Port Macquarie","hub":"Sydney"},
+          {"from_lon":151.78,"from_lat":-32.93, "to_lon":151.21,"to_lat":-33.87,"flow":42,"origin":"Newcastle","hub":"Sydney"},
+          {"from_lon":150.89,"from_lat":-34.42, "to_lon":151.21,"to_lat":-33.87,"flow":38,"origin":"Wollongong","hub":"Sydney"},
+          {"from_lon":150.54,"from_lat":-33.75, "to_lon":151.21,"to_lat":-33.87,"flow":46,"origin":"Penrith",  "hub":"Sydney"}
         ]
       },
-      "mark": {"type": "rule", "opacity": 0.9},
+      "mark": {"type": "rule", "opacity": 0.85},
       "encoding": {
         "longitude":  {"field": "from_lon", "type": "quantitative"},
         "latitude":   {"field": "from_lat", "type": "quantitative"},
@@ -659,42 +644,41 @@ vegaEmbed('#chart11', {
         "latitude2":  {"field": "to_lat"},
         "strokeWidth": {
           "field": "flow", "type": "quantitative",
-          "scale": {"domain": [5, 48], "range": [1.5, 8]},
+          "scale": {"domain": [10, 50], "range": [1, 7]},
           "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Flow volume"}
         },
         "stroke": {
-          "field": "flow", "type": "quantitative",
-          "scale": {"domain": [5, 48], "range": ["#8b5e3c", "#e8b84b"]},
-          "legend": null
+          "field": "hub", "type": "nominal",
+          "scale": {
+            "domain": ["Melbourne", "Sydney"],
+            "range":  ["#c8860a",   "#e8b84b"]
+          },
+          "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "CBD hub"}
         },
         "tooltip": [
-          {"field": "hub",  "type": "nominal",      "title": "CBD hub"},
-          {"field": "flow", "type": "quantitative", "title": "Flow volume"}
+          {"field": "origin", "type": "nominal",      "title": "Origin"},
+          {"field": "hub",    "type": "nominal",      "title": "CBD hub"},
+          {"field": "flow",   "type": "quantitative", "title": "Flow volume"}
         ]
       }
     },
     {
       "data": {
         "values": [
-          {"hub":"Melbourne","lon":144.95,"lat":-37.81,"flow":48},
-          {"hub":"Sydney",   "lon":151.21,"lat":-33.87,"flow":46},
-          {"hub":"Brisbane", "lon":153.02,"lat":-27.47,"flow":34},
-          {"hub":"Perth",    "lon":115.86,"lat":-31.95,"flow":26},
-          {"hub":"Adelaide", "lon":138.60,"lat":-34.93,"flow":22},
-          {"hub":"Canberra", "lon":149.13,"lat":-35.28,"flow":18},
-          {"hub":"Hobart",   "lon":147.33,"lat":-42.88,"flow":12},
-          {"hub":"Darwin",   "lon":130.84,"lat":-12.46,"flow":8}
+          {"hub":"Melbourne","lon":144.95,"lat":-37.81},
+          {"hub":"Sydney",   "lon":151.21,"lat":-33.87}
         ]
       },
-      "mark": {"type": "circle", "opacity": 1.0, "color": "#c8860a"},
+      "mark": {"type": "circle", "opacity": 1.0},
       "encoding": {
         "longitude": {"field": "lon", "type": "quantitative"},
         "latitude":  {"field": "lat", "type": "quantitative"},
-        "size": {
-          "field": "flow", "type": "quantitative",
-          "scale": {"domain": [5, 48], "range": [80, 500]},
+        "color": {
+          "field": "hub", "type": "nominal",
+          "scale": {"domain": ["Melbourne","Sydney"], "range": ["#c8860a","#e8b84b"]},
           "legend": null
         },
+        "size": {"value": 300},
         "tooltip": [{"field": "hub", "type": "nominal", "title": "CBD hub"}]
       }
     },
@@ -702,16 +686,10 @@ vegaEmbed('#chart11', {
       "data": {
         "values": [
           {"hub":"Melbourne","lon":144.95,"lat":-37.81},
-          {"hub":"Sydney",   "lon":151.21,"lat":-33.87},
-          {"hub":"Brisbane", "lon":153.02,"lat":-27.47},
-          {"hub":"Perth",    "lon":115.86,"lat":-31.95},
-          {"hub":"Adelaide", "lon":138.60,"lat":-34.93},
-          {"hub":"Canberra", "lon":149.13,"lat":-35.28},
-          {"hub":"Hobart",   "lon":147.33,"lat":-42.88},
-          {"hub":"Darwin",   "lon":130.84,"lat":-12.46}
+          {"hub":"Sydney",   "lon":151.21,"lat":-33.87}
         ]
       },
-      "mark": {"type": "text", "dy": -14, "fontSize": 11, "fontWeight": "bold", "font": "DM Sans", "color": "#f0e6d3"},
+      "mark": {"type": "text", "dy": -16, "fontSize": 13, "fontWeight": "bold", "font": "DM Sans", "color": "#f0e6d3"},
       "encoding": {
         "longitude": {"field": "lon", "type": "quantitative"},
         "latitude":  {"field": "lat", "type": "quantitative"},

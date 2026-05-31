@@ -352,33 +352,19 @@
       }
     }, {"actions": false});
 
-    // ── CHART 5 — Small multiples (interactive) ───────────────────────────
-vegaEmbed('#chart5', {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "background": "transparent",
-  "data": {"url": typeUrl},
-  "params": [
-    {
-      "name": "hoveredType",
-      "select": {"type": "point", "fields": ["coffee_type"], "on": "mouseover"},
-      "bind": "legend"
-    }
-  ],
-  "facet": {
-    "field": "age_group", "type": "nominal",
-    "sort": ["14–24","25–34","35–49","50–64","65+"],
-    "header": {
-      "title": null,
-      "labelColor": "#c8860a",
-      "labelFontSize": 13,
-      "labelFont": "Playfair Display"
-    }
-  },
-  "spec": {
-    "width": 160, "height": 160,
-    "layer": [
-      {
-        "mark": {"type": "line", "strokeWidth": 2, "interpolate": "monotone"},
+    // ── CHART 5 — Small multiples (line charts) ───────────────────────────
+    vegaEmbed('#chart5', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "background": "transparent",
+      "data": {"url": typeUrl},
+      "facet": {
+        "field": "age_group", "type": "nominal",
+        "sort": ["14–24","25–34","35–49","50–64","65+"],
+        "header": {"title": null, "labelColor": "#c8860a", "labelFontSize": 13, "labelFont": "Playfair Display"}
+      },
+      "spec": {
+        "width": 160, "height": 160,
+        "mark": {"type": "line", "point": {"filled": true, "size": 40}, "strokeWidth": 2, "interpolate": "monotone"},
         "encoding": {
           "x": {
             "field": "coffee_type", "type": "nominal",
@@ -395,45 +381,12 @@ vegaEmbed('#chart5', {
             "scale": {"domain": ["Latte","Flat white","Cappuccino","Espresso","Long black"], "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#f0e6d3"]},
             "legend": {"labelColor": "#a08060", "titleColor": "#a08060", "title": "Coffee type", "orient": "right"}
           },
-          "opacity": {
-            "condition": {"param": "hoveredType", "value": 1},
-            "value": 0.2
-          }
+          "tooltip": [{"field": "age_group", "type": "nominal", "title": "Age group"}, {"field": "coffee_type", "type": "nominal", "title": "Type"}, {"field": "percentage", "type": "quantitative", "title": "%", "format": ".0f"}]
         }
       },
-      {
-        "mark": {"type": "point", "filled": true, "size": 80},
-        "encoding": {
-          "x": {
-            "field": "coffee_type", "type": "nominal",
-            "sort": ["Latte","Flat white","Cappuccino","Espresso","Long black"]
-          },
-          "y": {"field": "percentage", "type": "quantitative"},
-          "color": {
-            "field": "coffee_type", "type": "nominal",
-            "sort": ["Latte","Flat white","Cappuccino","Espresso","Long black"],
-            "scale": {"domain": ["Latte","Flat white","Cappuccino","Espresso","Long black"], "range": ["#c8860a","#e8b84b","#8b5e3c","#5c3317","#f0e6d3"]}
-          },
-          "opacity": {
-            "condition": {"param": "hoveredType", "value": 1},
-            "value": 0.2
-          },
-          "size": {
-            "condition": {"param": "hoveredType", "value": 150},
-            "value": 60
-          },
-          "tooltip": [
-            {"field": "age_group",   "type": "nominal",      "title": "Age group"},
-            {"field": "coffee_type", "type": "nominal",      "title": "Type"},
-            {"field": "percentage",  "type": "quantitative", "title": "%", "format": ".1f"}
-          ]
-        }
-      }
-    ]
-  },
-  "columns": 5,
-  "config": {"background": "transparent"}
-}, {"actions": false});
+      "columns": 5,
+      "config": {"background": "transparent"}
+    }, {"actions": false});
 
     // ── CHART 6 — Dumbbell chart ──────────────────────────────────────────
     vegaEmbed('#chart6', {
@@ -487,150 +440,79 @@ vegaEmbed('#chart5', {
       }
     }, {"actions": false});
 
-    // ── CHART 8 — Horizon graph (interactive) ────────────────────────────
-vegaEmbed('#chart8', {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "background": "transparent",
-  "data": {
-    "values": [
-      {"state":"VIC","year":2015,"v":0},{"state":"VIC","year":2016,"v":2.1},{"state":"VIC","year":2017,"v":4.2},{"state":"VIC","year":2018,"v":6.3},{"state":"VIC","year":2019,"v":8.4},{"state":"VIC","year":2020,"v":10.5},{"state":"VIC","year":2021,"v":12.6},{"state":"VIC","year":2022,"v":14.7},{"state":"VIC","year":2023,"v":16.8},{"state":"VIC","year":2024,"v":18.9},{"state":"VIC","year":2025,"v":21.0},
-      {"state":"ACT","year":2015,"v":0},{"state":"ACT","year":2016,"v":2.4},{"state":"ACT","year":2017,"v":4.8},{"state":"ACT","year":2018,"v":7.2},{"state":"ACT","year":2019,"v":9.6},{"state":"ACT","year":2020,"v":12.0},{"state":"ACT","year":2021,"v":14.4},{"state":"ACT","year":2022,"v":16.8},{"state":"ACT","year":2023,"v":19.2},{"state":"ACT","year":2024,"v":21.6},{"state":"ACT","year":2025,"v":24.0},
-      {"state":"NSW","year":2015,"v":0},{"state":"NSW","year":2016,"v":2.1},{"state":"NSW","year":2017,"v":4.2},{"state":"NSW","year":2018,"v":6.3},{"state":"NSW","year":2019,"v":8.4},{"state":"NSW","year":2020,"v":10.5},{"state":"NSW","year":2021,"v":12.6},{"state":"NSW","year":2022,"v":14.7},{"state":"NSW","year":2023,"v":16.8},{"state":"NSW","year":2024,"v":18.9},{"state":"NSW","year":2025,"v":21.0},
-      {"state":"SA","year":2015,"v":0},{"state":"SA","year":2016,"v":2.2},{"state":"SA","year":2017,"v":4.4},{"state":"SA","year":2018,"v":6.6},{"state":"SA","year":2019,"v":8.8},{"state":"SA","year":2020,"v":11.0},{"state":"SA","year":2021,"v":13.2},{"state":"SA","year":2022,"v":15.4},{"state":"SA","year":2023,"v":17.6},{"state":"SA","year":2024,"v":19.8},{"state":"SA","year":2025,"v":22.0},
-      {"state":"WA","year":2015,"v":0},{"state":"WA","year":2016,"v":1.8},{"state":"WA","year":2017,"v":3.6},{"state":"WA","year":2018,"v":5.4},{"state":"WA","year":2019,"v":7.2},{"state":"WA","year":2020,"v":9.0},{"state":"WA","year":2021,"v":10.8},{"state":"WA","year":2022,"v":12.6},{"state":"WA","year":2023,"v":14.4},{"state":"WA","year":2024,"v":16.2},{"state":"WA","year":2025,"v":18.0},
-      {"state":"QLD","year":2015,"v":0},{"state":"QLD","year":2016,"v":2.0},{"state":"QLD","year":2017,"v":4.0},{"state":"QLD","year":2018,"v":6.1},{"state":"QLD","year":2019,"v":8.1},{"state":"QLD","year":2020,"v":10.5},{"state":"QLD","year":2021,"v":12.6},{"state":"QLD","year":2022,"v":14.1},{"state":"QLD","year":2023,"v":16.1},{"state":"QLD","year":2024,"v":18.1},{"state":"QLD","year":2025,"v":20.5},
-      {"state":"TAS","year":2015,"v":0},{"state":"TAS","year":2016,"v":2.5},{"state":"TAS","year":2017,"v":5.0},{"state":"TAS","year":2018,"v":7.5},{"state":"TAS","year":2019,"v":10.0},{"state":"TAS","year":2020,"v":12.5},{"state":"TAS","year":2021,"v":15.0},{"state":"TAS","year":2022,"v":17.5},{"state":"TAS","year":2023,"v":20.0},{"state":"TAS","year":2024,"v":22.5},{"state":"TAS","year":2025,"v":25.0},
-      {"state":"NT","year":2015,"v":0},{"state":"NT","year":2016,"v":1.5},{"state":"NT","year":2017,"v":3.0},{"state":"NT","year":2018,"v":4.5},{"state":"NT","year":2019,"v":6.0},{"state":"NT","year":2020,"v":7.5},{"state":"NT","year":2021,"v":9.0},{"state":"NT","year":2022,"v":10.5},{"state":"NT","year":2023,"v":12.0},{"state":"NT","year":2024,"v":13.5},{"state":"NT","year":2025,"v":15.0}
-    ]
-  },
-  "params": [
-    {
-      "name": "hoveredState",
-      "select": {"type": "point", "fields": ["state"], "on": "mouseover"},
-      "bind": "legend"
-    }
-  ],
-  "facet": {
-    "field": "state", "type": "nominal",
-    "sort": ["VIC","ACT","NSW","SA","WA","QLD","TAS","NT"],
-    "header": {
-      "title": null,
-      "labelColor": "#c8860a",
-      "labelFontSize": 11,
-      "labelFont": "DM Sans",
-      "labelAlign": "left",
-      "labelAnchor": "middle",
-      "labelPadding": 4
-    }
-  },
-  "columns": 1, "spacing": 2,
-  "spec": {
-    "width": "container", "height": 50,
-    "layer": [
-      {
-        "mark": {"type": "area", "interpolate": "monotone", "clip": true},
-        "transform": [{"calculate": "min(datum.v, 8)", "as": "b1"}],
-        "encoding": {
-          "x": {
-            "field": "year", "type": "quantitative",
-            "scale": {"domain": [2015, 2025]},
-            "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "format": "d", "labelFontSize": 10, "title": null}
-          },
-          "y": {"field": "b1", "type": "quantitative", "scale": {"domain": [0, 8]}, "axis": null},
-          "y2": {"datum": 0},
-          "fill": {"value": "#8b5e3c"},
-          "fillOpacity": {
-            "condition": {"param": "hoveredState", "value": 1.0},
-            "value": 0.4
-          },
-          "tooltip": [
-            {"field": "state", "type": "nominal",      "title": "State"},
-            {"field": "year",  "type": "quantitative", "title": "Year", "format": "d"},
-            {"field": "v",     "type": "quantitative", "title": "Growth index", "format": ".1f"}
-          ]
-        }
+    // ── CHART 8 — Horizon graph ───────────────────────────────────────────
+    vegaEmbed('#chart8', {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "background": "transparent",
+      "data": {
+        "values": [
+          {"state":"VIC","year":2015,"v":0},{"state":"VIC","year":2016,"v":2.1},{"state":"VIC","year":2017,"v":4.2},{"state":"VIC","year":2018,"v":6.3},{"state":"VIC","year":2019,"v":8.4},{"state":"VIC","year":2020,"v":10.5},{"state":"VIC","year":2021,"v":12.6},{"state":"VIC","year":2022,"v":14.7},{"state":"VIC","year":2023,"v":16.8},{"state":"VIC","year":2024,"v":18.9},{"state":"VIC","year":2025,"v":21.0},
+          {"state":"ACT","year":2015,"v":0},{"state":"ACT","year":2016,"v":2.4},{"state":"ACT","year":2017,"v":4.8},{"state":"ACT","year":2018,"v":7.2},{"state":"ACT","year":2019,"v":9.6},{"state":"ACT","year":2020,"v":12.0},{"state":"ACT","year":2021,"v":14.4},{"state":"ACT","year":2022,"v":16.8},{"state":"ACT","year":2023,"v":19.2},{"state":"ACT","year":2024,"v":21.6},{"state":"ACT","year":2025,"v":24.0},
+          {"state":"NSW","year":2015,"v":0},{"state":"NSW","year":2016,"v":2.1},{"state":"NSW","year":2017,"v":4.2},{"state":"NSW","year":2018,"v":6.3},{"state":"NSW","year":2019,"v":8.4},{"state":"NSW","year":2020,"v":10.5},{"state":"NSW","year":2021,"v":12.6},{"state":"NSW","year":2022,"v":14.7},{"state":"NSW","year":2023,"v":16.8},{"state":"NSW","year":2024,"v":18.9},{"state":"NSW","year":2025,"v":21.0},
+          {"state":"SA", "year":2015,"v":0},{"state":"SA", "year":2016,"v":2.2},{"state":"SA", "year":2017,"v":4.4},{"state":"SA", "year":2018,"v":6.6},{"state":"SA", "year":2019,"v":8.8},{"state":"SA", "year":2020,"v":11.0},{"state":"SA", "year":2021,"v":13.2},{"state":"SA", "year":2022,"v":15.4},{"state":"SA", "year":2023,"v":17.6},{"state":"SA", "year":2024,"v":19.8},{"state":"SA", "year":2025,"v":22.0},
+          {"state":"WA", "year":2015,"v":0},{"state":"WA", "year":2016,"v":1.8},{"state":"WA", "year":2017,"v":3.6},{"state":"WA", "year":2018,"v":5.4},{"state":"WA", "year":2019,"v":7.2},{"state":"WA", "year":2020,"v":9.0},{"state":"WA", "year":2021,"v":10.8},{"state":"WA", "year":2022,"v":12.6},{"state":"WA", "year":2023,"v":14.4},{"state":"WA", "year":2024,"v":16.2},{"state":"WA", "year":2025,"v":18.0},
+          {"state":"QLD","year":2015,"v":0},{"state":"QLD","year":2016,"v":2.0},{"state":"QLD","year":2017,"v":4.0},{"state":"QLD","year":2018,"v":6.1},{"state":"QLD","year":2019,"v":8.1},{"state":"QLD","year":2020,"v":10.5},{"state":"QLD","year":2021,"v":12.6},{"state":"QLD","year":2022,"v":14.1},{"state":"QLD","year":2023,"v":16.1},{"state":"QLD","year":2024,"v":18.1},{"state":"QLD","year":2025,"v":20.5},
+          {"state":"TAS","year":2015,"v":0},{"state":"TAS","year":2016,"v":2.5},{"state":"TAS","year":2017,"v":5.0},{"state":"TAS","year":2018,"v":7.5},{"state":"TAS","year":2019,"v":10.0},{"state":"TAS","year":2020,"v":12.5},{"state":"TAS","year":2021,"v":15.0},{"state":"TAS","year":2022,"v":17.5},{"state":"TAS","year":2023,"v":20.0},{"state":"TAS","year":2024,"v":22.5},{"state":"TAS","year":2025,"v":25.0},
+          {"state":"NT", "year":2015,"v":0},{"state":"NT", "year":2016,"v":1.5},{"state":"NT", "year":2017,"v":3.0},{"state":"NT", "year":2018,"v":4.5},{"state":"NT", "year":2019,"v":6.0},{"state":"NT", "year":2020,"v":7.5},{"state":"NT", "year":2021,"v":9.0},{"state":"NT", "year":2022,"v":10.5},{"state":"NT", "year":2023,"v":12.0},{"state":"NT", "year":2024,"v":13.5},{"state":"NT", "year":2025,"v":15.0}
+        ]
       },
-      {
-        "mark": {"type": "area", "interpolate": "monotone", "clip": true},
-        "transform": [{"calculate": "max(min(datum.v - 8, 8), 0)", "as": "b2"}],
-        "encoding": {
-          "x": {"field": "year", "type": "quantitative", "scale": {"domain": [2015, 2025]}},
-          "y": {"field": "b2", "type": "quantitative", "scale": {"domain": [0, 8]}, "axis": null},
-          "y2": {"datum": 0},
-          "fill": {"value": "#c8860a"},
-          "fillOpacity": {
-            "condition": {"param": "hoveredState", "value": 0.95},
-            "value": 0.35
-          },
-          "tooltip": [
-            {"field": "state", "type": "nominal",      "title": "State"},
-            {"field": "year",  "type": "quantitative", "title": "Year", "format": "d"},
-            {"field": "v",     "type": "quantitative", "title": "Growth index", "format": ".1f"}
-          ]
-        }
+      "facet": {
+        "field": "state", "type": "nominal",
+        "sort": ["VIC","ACT","NSW","SA","WA","QLD","TAS","NT"],
+        "header": {"title": null, "labelColor": "#c8860a", "labelFontSize": 11, "labelFont": "DM Sans", "labelAlign": "left", "labelAnchor": "middle", "labelPadding": 4}
       },
-      {
-        "mark": {"type": "area", "interpolate": "monotone", "clip": true},
-        "transform": [{"calculate": "max(min(datum.v - 16, 8), 0)", "as": "b3"}],
-        "encoding": {
-          "x": {"field": "year", "type": "quantitative", "scale": {"domain": [2015, 2025]}},
-          "y": {"field": "b3", "type": "quantitative", "scale": {"domain": [0, 8]}, "axis": null},
-          "y2": {"datum": 0},
-          "fill": {"value": "#e8b84b"},
-          "fillOpacity": {
-            "condition": {"param": "hoveredState", "value": 0.9},
-            "value": 0.3
+      "columns": 1, "spacing": 2,
+      "spec": {
+        "width": "container", "height": 50,
+        "layer": [
+          {
+            "mark": {"type": "area", "interpolate": "monotone", "clip": true},
+            "transform": [{"calculate": "min(datum.v, 8)", "as": "b1"}],
+            "encoding": {
+              "x": {"field": "year", "type": "quantitative", "scale": {"domain": [2015,2025]}, "axis": {"labelColor": "#a08060", "gridColor": "#2d1f0f", "format": "d", "labelFontSize": 10, "title": null}},
+              "y": {"field": "b1", "type": "quantitative", "scale": {"domain": [0,8]}, "axis": null},
+              "y2": {"datum": 0},
+              "fill": {"value": "#8b5e3c"},
+              "fillOpacity": {"value": 0.9}
+            }
           },
-          "tooltip": [
-            {"field": "state", "type": "nominal",      "title": "State"},
-            {"field": "year",  "type": "quantitative", "title": "Year", "format": "d"},
-            {"field": "v",     "type": "quantitative", "title": "Growth index", "format": ".1f"}
-          ]
-        }
+          {
+            "mark": {"type": "area", "interpolate": "monotone", "clip": true},
+            "transform": [{"calculate": "max(min(datum.v - 8, 8), 0)", "as": "b2"}],
+            "encoding": {
+              "x": {"field": "year", "type": "quantitative", "scale": {"domain": [2015,2025]}},
+              "y": {"field": "b2", "type": "quantitative", "scale": {"domain": [0,8]}, "axis": null},
+              "y2": {"datum": 0},
+              "fill": {"value": "#c8860a"},
+              "fillOpacity": {"value": 0.85}
+            }
+          },
+          {
+            "mark": {"type": "area", "interpolate": "monotone", "clip": true},
+            "transform": [{"calculate": "max(min(datum.v - 16, 8), 0)", "as": "b3"}],
+            "encoding": {
+              "x": {"field": "year", "type": "quantitative", "scale": {"domain": [2015,2025]}},
+              "y": {"field": "b3", "type": "quantitative", "scale": {"domain": [0,8]}, "axis": null},
+              "y2": {"datum": 0},
+              "fill": {"value": "#e8b84b"},
+              "fillOpacity": {"value": 0.8}
+            }
+          },
+          {
+            "mark": {"type": "area", "interpolate": "monotone", "clip": true},
+            "transform": [{"calculate": "max(datum.v - 24, 0)", "as": "b4"}],
+            "encoding": {
+              "x": {"field": "year", "type": "quantitative", "scale": {"domain": [2015,2025]}},
+              "y": {"field": "b4", "type": "quantitative", "scale": {"domain": [0,8]}, "axis": null},
+              "y2": {"datum": 0},
+              "fill": {"value": "#f0c060"},
+              "fillOpacity": {"value": 0.75}
+            }
+          }
+        ]
       },
-      {
-        "mark": {"type": "area", "interpolate": "monotone", "clip": true},
-        "transform": [{"calculate": "max(datum.v - 24, 0)", "as": "b4"}],
-        "encoding": {
-          "x": {"field": "year", "type": "quantitative", "scale": {"domain": [2015, 2025]}},
-          "y": {"field": "b4", "type": "quantitative", "scale": {"domain": [0, 8]}, "axis": null},
-          "y2": {"datum": 0},
-          "fill": {"value": "#f0c060"},
-          "fillOpacity": {
-            "condition": {"param": "hoveredState", "value": 0.85},
-            "value": 0.25
-          },
-          "tooltip": [
-            {"field": "state", "type": "nominal",      "title": "State"},
-            {"field": "year",  "type": "quantitative", "title": "Year", "format": "d"},
-            {"field": "v",     "type": "quantitative", "title": "Growth index", "format": ".1f"}
-          ]
-        }
-      },
-      {
-        "mark": {"type": "line", "interpolate": "monotone", "strokeWidth": 2, "clip": true, "color": "#f0e6d3"},
-        "encoding": {
-          "x": {"field": "year", "type": "quantitative", "scale": {"domain": [2015, 2025]}},
-          "y": {
-            "field": "v", "type": "quantitative",
-            "scale": {"domain": [0, 8]},
-            "axis": null
-          },
-          "opacity": {
-            "condition": {"param": "hoveredState", "value": 0.9},
-            "value": 0.1
-          },
-          "tooltip": [
-            {"field": "state", "type": "nominal",      "title": "State"},
-            {"field": "year",  "type": "quantitative", "title": "Year", "format": "d"},
-            {"field": "v",     "type": "quantitative", "title": "Growth index", "format": ".1f"}
-          ]
-        }
-      }
-    ]
-  },
-  "config": {"background": "transparent", "view": {"stroke": "#3d2b1a"}}
-}, {"actions": false});
+      "config": {"background": "transparent", "view": {"stroke": "#3d2b1a"}}
+    }, {"actions": false});
 
     // ── CHART 9 — Treemap ─────────────────────────────────────────────────
     vegaEmbed('#chart9', {
